@@ -31,8 +31,8 @@ namespace ReCollect.RichTextText_Test
 			
 			window.BackgroundColor = UIColor.White;
 
+			// Create a label that shows some supported Html
 			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 20);
-
 			var label = new RichTextLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				TextColor = UIColor.Black,
@@ -40,19 +40,31 @@ namespace ReCollect.RichTextText_Test
 				Lines = 0
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
-
 			var text = new RichText ("<p>Regular</p><p><i>Italics</i></p><p><b>BOLD!</b></p><p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>") {
 				LinkColor = UIColor.Orange
 			};
-			label.AttributedText = text.AttributedText;
-
+			label.RichText = text;
 			var bounding_rect = text.GetBoundedSize (bounds.Size);
 			label.Bounds = new CGRect (
 				10, 1000, window.Bounds.Width - 20, bounding_rect.Height
 			);
 
+			// Create a tappable view that demonstrates that we are bubbling taps
+			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
+			tappable.Frame = new CGRect (10, 200, 200, 30);
+			var btn_label = new RichTextLabel (new CGRect (0, 0, 200, 30)) {
+				RichText = new RichText ("<b>Tap to check bubbling</b>")
+			};
+			tappable.AddSubview (btn_label);
+			tappable.AddGestureRecognizer (new UITapGestureRecognizer (tap => {
+				var alert = new UIAlertView ("Success", "Tap bubbled.", null, "Close", null);
+				alert.Show ();
+			}));
+
+			// Add views
 			var vc = new UIViewController ();
 			vc.Add (label);
+			vc.Add (tappable);
 			window.RootViewController = vc;
 			
 			// make the window visible

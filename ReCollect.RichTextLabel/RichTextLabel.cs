@@ -8,50 +8,64 @@ namespace ReCollect
 {
 	public class RichTextLabel : UILabel
 	{
-		class HtmlLink {
-			public NSRange Range;
-			public NSUrl Url;
+		List<HtmlLink> HtmlLinks = new List<HtmlLink> {};
+
+		public RichTextLabel () : base ()
+		{
+			Setup ();
 		}
-		List<HtmlLink> HtmlLinks;
 
 		public RichTextLabel (CGRect bounds) : base (bounds)
 		{
-			UserInteractionEnabled = true;
-
-			AddGestureRecognizer (new UITapGestureRecognizer (tap => {
-				var point = tap.LocationOfTouch (0, this);
-				OpenLinkAtPoint (new CGPoint (point.X - Bounds.X, point.Y - Bounds.Y));
-			}));
+			Setup ();
 		}
 
-		public override NSAttributedString AttributedText {
+		void Setup ()
+		{
+			UserInteractionEnabled = true;
+			AddGestureRecognizer (new UITapGestureRecognizer () {
+				Delegate = new LinkGestureDelegate (this)
+			});
+		}
+
+		protected internal new NSAttributedString AttributedText {
+			set {
+				throw new Exception ("Set RichText instead of AttributedText!");
+			}
+		}
+
+		RichText _rich_text = null;
+		public RichText RichText {
 			get {
-				return base.AttributedText;
+				return _rich_text;
 			}
 			set {
-				base.AttributedText = value;
-				FindLinks (value);
+				_rich_text = value;
+				FindLinks (_rich_text);
+				base.AttributedText = _rich_text.AttributedText;
 			}
 		}
 
-		void OpenLinkAtPoint (CGPoint point) {
+		bool OpenLinkAtPoint (CGPoint point) {
 			foreach (var link in HtmlLinks) {
-				var bounds = BoundingRectForCharacterRange (AttributedText, link.Range);
+				var bounds = BoundingRectForCharacterRange (_rich_text.AttributedText, link.Range);
 				if (bounds.Contains (point)) {
 					// Open the url if we can
 					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
 						UIApplication.SharedApplication.OpenUrl (link.Url);
 					}
+					return true;
 				}
 			}
+			return false;
 		}
 			
-		void FindLinks (NSAttributedString str) {
+		void FindLinks (RichText text) {
 			// Build the list of links
-			HtmlLinks = new List<HtmlLink> { };
-			str.EnumerateAttribute (
+			HtmlLinks.Clear ();
+			text.AttributedText.EnumerateAttribute (
 				new NSString ("Link"),
-				new Foundation.NSRange (0, AttributedText.Length),
+				new Foundation.NSRange (0, _rich_text.AttributedText.Length),
 				Foundation.NSAttributedStringEnumeration.None,
 				delegate (NSObject attr, NSRange range, ref bool stop) {
 					if (attr != null) {
@@ -80,6 +94,26 @@ namespace ReCollect
 			layoutManager.CharacterRangeForGlyphRange (range, ref glyphRange);
 
 			return layoutManager.BoundingRectForGlyphRange (glyphRange, textContainer);
+		}
+
+		class HtmlLink {
+			public NSRange Range;
+			public NSUrl Url;
+		}
+
+		class LinkGestureDelegate : UIGestureRecognizerDelegate
+		{
+			RichTextLabel Label;
+			public LinkGestureDelegate (RichTextLabel label) : base ()
+			{
+				Label = label;
+			}
+
+			public override bool ShouldReceiveTouch (UIGestureRecognizer recognizer, UITouch touch)
+			{
+				var point = touch.LocationInView (Label);
+				return Label.OpenLinkAtPoint (new CGPoint (point.X - Label.Bounds.X, point.Y - Label.Bounds.Y));
+			}
 		}
 	}
 }
