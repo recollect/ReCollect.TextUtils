@@ -37,9 +37,7 @@ namespace ReCollect
 		void OpenLinkAtPoint (CGPoint point) {
 			foreach (var link in HtmlLinks) {
 				var bounds = BoundingRectForCharacterRange (AttributedText, link.Range);
-				Console.WriteLine ("Checking {0} within {1}", point, bounds);
 				if (bounds.Contains (point)) {
-					Console.WriteLine ("CONTAINS. Launching {0}", link.Url);
 					// Open the url if we can
 					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
 						UIApplication.SharedApplication.OpenUrl (link.Url);
