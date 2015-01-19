@@ -3,7 +3,7 @@
 This library is yet another implementation of a Rich-Text UILabel that allows
 for HTML to be parsed and emitted as a `NSMutableAttributedString`.
 
-HTML is parsed using the [Html Agility Pack]{http://htmlagilitypack.codeplex.com/},
+HTML is parsed using the [Html Agility Pack](http://htmlagilitypack.codeplex.com/), 
 and then emitted as rich-text that can be set on the ReCollect.RichTextLabel.
 
 ### Supported HTML
