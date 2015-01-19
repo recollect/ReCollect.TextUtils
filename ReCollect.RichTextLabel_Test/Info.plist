@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>ReCollect.HtmlLabel_Test</string>
+	<string>ReCollect.RichTextLabel_Test</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.ReCollect.HtmlLabel_Test</string>
+	<string>com.your-company.ReCollect.RichTextLabel_Test</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace ReCollect.HtmlLabel_Test
+namespace ReCollect.RichTextText_Test
 {
 	public class Application
 	{
