@@ -1,7 +1,8 @@
 ## ReCollect.RichTextLabel
 
 This library is yet another implementation of a Rich-Text UILabel that allows
-for HTML to be parsed and emitted as a `NSMutableAttributedString`.
+for HTML to be parsed and emitted as a `NSMutableAttributedString`. This
+implementation is implemented in C# for use in a Xamarin iOS application.
 
 HTML is parsed using the [Html Agility Pack](http://htmlagilitypack.codeplex.com/), 
 and then emitted as rich-text that can be set on the ReCollect.RichTextLabel.
