@@ -13,6 +13,8 @@ namespace ReCollect
 		nfloat FontSize = 18;
 		string Html;
 
+		public UIColor LinkColor = UIColor.Blue; // Default link colour
+
 		public RichText (string html, Nullable<nfloat> fontSize=null)
 		{
 			// Decode any HTML entities
@@ -46,10 +48,19 @@ namespace ReCollect
 
 				// Apply attributes
 				_AttributedText = new NSMutableAttributedString (text.Text);
+				_AttributedText.BeginEditing ();
 				while (text.Attributes.Count > 0) {
 					var ranged_attrs = text.Attributes.Pop ();
-					_AttributedText.AddAttributes (ranged_attrs.Attributes.Dictionary, ranged_attrs.Range);
+					var attributes = (NSMutableDictionary) ranged_attrs.Attributes.Dictionary;
+
+					if (attributes ["NSLink"] != null) {
+						attributes ["Link"] = attributes ["NSLink"];
+						attributes.Remove (new NSString ("NSLink"));
+					}
+
+					_AttributedText.AddAttributes (attributes, ranged_attrs.Range);
 				}
+				_AttributedText.EndEditing ();
 
 				return _AttributedText;
 			}
@@ -85,7 +96,9 @@ namespace ReCollect
 				var href = node.GetAttributeValue ("href", "");
 				if (! string.IsNullOrEmpty (href)) {
 					attributes.Add (new UIStringAttributes () {
-						ForegroundColor = UIColor.Blue,
+						ForegroundColor = LinkColor,
+						UnderlineColor = LinkColor,
+						UnderlineStyle = NSUnderlineStyle.Single,
 						Link = NSUrl.FromString (href)
 					});
 				}

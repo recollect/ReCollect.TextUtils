@@ -41,7 +41,9 @@ namespace ReCollect.RichTextText_Test
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
 
-			var text = new RichText ("<p>Regular</p><p><i>Italics</i></p><p><b>BOLD!</b></p><p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>");
+			var text = new RichText ("<p>Regular</p><p><i>Italics</i></p><p><b>BOLD!</b></p><p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>") {
+				LinkColor = UIColor.Orange
+			};
 			label.AttributedText = text.AttributedText;
 
 			var bounding_rect = text.GetBoundedSize (bounds.Size);

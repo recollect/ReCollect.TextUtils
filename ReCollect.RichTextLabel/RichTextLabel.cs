@@ -8,6 +8,12 @@ namespace ReCollect
 {
 	public class RichTextLabel : UILabel
 	{
+		class HtmlLink {
+			public NSRange Range;
+			public NSUrl Url;
+		}
+		List<HtmlLink> HtmlLinks;
+
 		public RichTextLabel (CGRect bounds) : base (bounds)
 		{
 			UserInteractionEnabled = true;
@@ -18,30 +24,51 @@ namespace ReCollect
 			}));
 		}
 
+		public override NSAttributedString AttributedText {
+			get {
+				return base.AttributedText;
+			}
+			set {
+				base.AttributedText = value;
+				FindLinks (value);
+			}
+		}
+
 		void OpenLinkAtPoint (CGPoint point) {
+			foreach (var link in HtmlLinks) {
+				var bounds = BoundingRectForCharacterRange (AttributedText, link.Range);
+				Console.WriteLine ("Checking {0} within {1}", point, bounds);
+				if (bounds.Contains (point)) {
+					Console.WriteLine ("CONTAINS. Launching {0}", link.Url);
+					// Open the url if we can
+					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
+						UIApplication.SharedApplication.OpenUrl (link.Url);
+					}
+				}
+			}
+		}
+			
+		void FindLinks (NSAttributedString str) {
 			// Build the list of links
-			AttributedText.EnumerateAttribute (
-				new NSString ("NSLink"),
+			HtmlLinks = new List<HtmlLink> { };
+			str.EnumerateAttribute (
+				new NSString ("Link"),
 				new Foundation.NSRange (0, AttributedText.Length),
 				Foundation.NSAttributedStringEnumeration.None,
 				delegate (NSObject attr, NSRange range, ref bool stop) {
 					if (attr != null) {
-						var bounds = BoundingRectForCharacterRange (range);
-						if (bounds.Contains (point)) {
-							// Open the url if we can
-							var url = (NSUrl) attr;
-							if (UIApplication.SharedApplication.CanOpenUrl (url)) {
-								UIApplication.SharedApplication.OpenUrl (url);
-							}
-						}
+						HtmlLinks.Add (new HtmlLink () {
+							Range = range,
+							Url = (NSUrl) attr
+						});
 					}
 				}
 			);
 		}
 
-		CGRect BoundingRectForCharacterRange (NSRange range) {
+		CGRect BoundingRectForCharacterRange (NSAttributedString str, NSRange range) {
 			var textStorage = new NSTextStorage ();
-			textStorage.SetString (AttributedText);
+			textStorage.SetString (str);
 
 			var layoutManager = new NSLayoutManager ();
 			textStorage.AddLayoutManager (layoutManager);
