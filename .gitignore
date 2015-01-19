@@ -1,0 +1,9 @@
+tmp
+.DS_Store
+*.swp
+*.apk
+*.userprefs
+*.rej
+Resource.designer.cs
+*/bin
+*/obj
