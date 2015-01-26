@@ -40,18 +40,32 @@ namespace ReCollect.RichTextText_Test
 				Lines = 0
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
-			var text = new RichText ("<p>Regular</p><p><i>Italics</i></p><p><b>BOLD!</b></p><p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>") {
-				LinkColor = UIColor.Orange
+			var text = new RichText (
+				"<h1>Header 1</h1>" +
+				"<h2>Header 2</h2>" +
+				"<h3>Header 3</h3>" +
+				"<h4>Header 4</h4>" +
+				"<h5>Header 5</h5>" +
+				"<p>Regular</p>" +
+				"<p><i>Italics</i></p>" +
+				"<b>BOLD! + BR</b><br />" +
+				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
+			) {
+				LinkColor = UIColor.Orange,
+				FontName = "HelveticaNeue-Light",
+				BoldFontName = "HelveticaNeue-Bold",
+				ItalicsFontName = "HelveticaNeue-Italics",
 			};
+
 			label.RichText = text;
 			var bounding_rect = text.GetBoundedSize (bounds.Size);
-			label.Bounds = new CGRect (
-				10, 1000, window.Bounds.Width - 20, bounding_rect.Height
+			label.Frame = new CGRect (
+				10, 50, window.Bounds.Width - 20, bounding_rect.Height
 			);
 
 			// Create a tappable view that demonstrates that we are bubbling taps
 			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
-			tappable.Frame = new CGRect (10, 200, 200, 30);
+			tappable.Frame = new CGRect (10, 300, 200, 30);
 			var btn_label = new RichTextLabel (new CGRect (0, 0, 200, 30)) {
 				RichText = new RichText ("<b>Tap to check bubbling</b>")
 			};

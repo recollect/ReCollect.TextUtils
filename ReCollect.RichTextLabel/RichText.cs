@@ -10,19 +10,19 @@ namespace ReCollect
 {
 	public class RichText
 	{
-		nfloat FontSize = 18;
+		public nfloat FontSize        = 18f;
+		public string FontName        = "Helvetica";
+		public string ItalicsFontName = "Helvetica-Italic";
+		public string BoldFontName    = "Helvetica-Bold";
+
 		string Html;
 
 		public UIColor LinkColor = UIColor.Blue; // Default link colour
 
-		public RichText (string html, Nullable<nfloat> fontSize=null)
+		public RichText (string html)
 		{
 			// Decode any HTML entities
 			Html = System.Web.HttpUtility.HtmlDecode (html);
-
-			if (fontSize.HasValue)
-				FontSize = fontSize.Value;
-
 		}
 
 		public CGSize GetBoundedSize (CGSize max) {
@@ -83,14 +83,56 @@ namespace ReCollect
 			var node_text = new TextWithAttrs ();
 			var attributes = new List<UIStringAttributes> { };
 
-			// Add to the array of attributes
+			/**
+			 * Block level nodes:
+			 */
 			switch (node.Name) {
 			case "p":
 			case "div":
+			case "br":
+			case "h1":
+			case "h2":
+			case "h3":
+			case "h4":
+			case "h5":
 				// Switch <p></p> into strings with newlines UNLESS this is the last <p> in the document
 				if (node.ParentNode.NodeType != HtmlNodeType.Document || node.NextSibling != null) {
 					node.InnerHtml = node.InnerHtml + "\n";
 				}
+				break;
+			}
+
+			// Add to the array of attributes
+			switch (node.Name) {
+			case "#document":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize)
+				});
+				break;
+			case "h1":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize * 1.5f)
+				});
+				break;
+			case "h2":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize * 1.4f)
+				});
+				break;
+			case "h3":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize * 1.3f)
+				});
+				break;
+			case "h4":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize * 1.2f)
+				});
+				break;
+			case "h5":
+				attributes.Add (new UIStringAttributes () {
+					Font = UIFont.FromName (FontName, fontSize * 1.1f)
+				});
 				break;
 			case "a":
 				var href = node.GetAttributeValue ("href", "");
@@ -106,13 +148,13 @@ namespace ReCollect
 			case "i":
 			case "em":
 				attributes.Add (new UIStringAttributes () {
-					Font = UIFont.FromName ("HelveticaNeue-Italic", fontSize)
+					Font = UIFont.FromName (ItalicsFontName, fontSize)
 				});
 				break;
 			case "b":
 			case "strong":
 				attributes.Add (new UIStringAttributes () {
-					Font = UIFont.FromName ("HelveticaNeue-Bold", fontSize)
+					Font = UIFont.FromName (BoldFontName, fontSize)
 				});
 				break;
 			case "font":
@@ -148,11 +190,6 @@ namespace ReCollect
 						break;
 					}
 				}
-				break;
-			case "#document":
-				attributes.Add (new UIStringAttributes () {
-					Font = UIFont.FromName ("HelveticaNeue-Light", fontSize)
-				});
 				break;
 			default:
 				Console.WriteLine ("UNHANDLED node={0}, text={1}", node.Name, node_text.Text);
