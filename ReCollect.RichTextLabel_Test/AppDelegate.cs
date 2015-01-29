@@ -49,6 +49,10 @@ namespace ReCollect.RichTextText_Test
 				"<p>Regular</p>" +
 				"<p><i>Italics</i></p>" +
 				"<b>BOLD! + BR</b><br />" +
+				"<font color=\"rgb(233,150,122)\">Salmon</font> " +
+					"<font color=\"#6a5acd\">SlateBlue</font> " +
+					"<font color=\"#F65\">Tomato</font> " +
+					"<font color=\"invalid\">Invalid</font><br/>" +
 				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
 			) {
 				LinkColor = UIColor.Orange,
@@ -65,7 +69,7 @@ namespace ReCollect.RichTextText_Test
 
 			// Create a tappable view that demonstrates that we are bubbling taps
 			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
-			tappable.Frame = new CGRect (10, 300, 200, 30);
+			tappable.Frame = new CGRect (10, 350, 200, 30);
 			var btn_label = new RichTextLabel (new CGRect (0, 0, 200, 30)) {
 				RichText = new RichText ("<b>Tap to check bubbling</b>")
 			};

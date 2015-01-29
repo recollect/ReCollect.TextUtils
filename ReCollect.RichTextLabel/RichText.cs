@@ -17,6 +17,47 @@ namespace ReCollect
 
 		string Html;
 
+		static float parse_hex_color_val (string hex)
+		{
+			if (hex.Length == 1)
+				hex = hex + hex;
+			return int.Parse (hex, System.Globalization.NumberStyles.HexNumber) / 255.0f;
+		}
+
+		static float parse_int_color_val (string val)
+		{
+			return int.Parse (val) / 255.0f;
+		}
+
+		public static UIColor ParseColor (string color_str)
+		{
+			try {
+				var hex_match = Regex.Match (color_str, "^#([0-9a-fA-F]{1,2}){3}$");
+				if (hex_match.Success) {
+					var captures = hex_match.Groups [1].Captures;
+					return UIColor.FromRGB (
+						parse_hex_color_val (captures [0].Value),
+						parse_hex_color_val (captures [1].Value),
+						parse_hex_color_val (captures [2].Value)
+					);
+				}
+
+				var rgb_match = Regex.Match (color_str, "^rgb\\((\\d+),(\\d+),(\\d+)\\)$");
+				if (rgb_match.Success) {
+					return UIColor.FromRGB (
+						parse_int_color_val (rgb_match.Groups [1].Value),
+						parse_int_color_val (rgb_match.Groups [2].Value),
+						parse_int_color_val (rgb_match.Groups [3].Value)
+					);
+				}
+			}
+			catch (Exception ex) {
+				Console.WriteLine ("Error parsing color parameter {0}: {1}", color_str, ex.Message);
+			}
+
+			return null;
+		}
+
 		public UIColor LinkColor = UIColor.Blue; // Default link colour
 
 		public RichText (string html)
@@ -166,33 +207,12 @@ namespace ReCollect
 						});
 						break;
 					case "color":
-						var rgb_match = Regex.Match (attr.Value, "^#([0-9A-F]{2}){3}$");
-						if (rgb_match.Success) {
-							try {
-								var captures = rgb_match.Groups [1].Captures;
-								attributes.Add (new UIStringAttributes () {
-									ForegroundColor =  UIColor.FromRGB(
-										int.Parse (captures [0].Value, System.Globalization.NumberStyles.HexNumber) / 255.0f,
-										int.Parse (captures [1].Value, System.Globalization.NumberStyles.HexNumber) / 255.0f,
-										int.Parse (captures [2].Value, System.Globalization.NumberStyles.HexNumber) / 255.0f
-									)
-								});
-							}
-							catch {
-								// Meh... keep it the default color
-							}
-						} else {
-							Console.WriteLine ("Unknown color: {0}", attr.Value);
-						}
-						break;
-					default:
-						Console.WriteLine ("UNHANDLED font attr={0}, value={1}", attr.Name, attr.Value);
+						attributes.Add (new UIStringAttributes () {
+							ForegroundColor = ParseColor (attr.Value)
+						});
 						break;
 					}
 				}
-				break;
-			default:
-				Console.WriteLine ("UNHANDLED node={0}, text={1}", node.Name, node_text.Text);
 				break;
 			}
 
