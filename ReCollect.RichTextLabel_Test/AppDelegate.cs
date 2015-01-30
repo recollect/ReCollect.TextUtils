@@ -35,7 +35,6 @@ namespace ReCollect.RichTextText_Test
 			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 20);
 			var label = new RichTextLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
-				TextColor = UIColor.Black,
 				AutosizesSubviews = true,
 				Lines = 0
 			};
@@ -56,6 +55,7 @@ namespace ReCollect.RichTextText_Test
 				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
 			) {
 				LinkColor = UIColor.Orange,
+				TextColor = UIColor.FromRGB (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
 				ItalicsFontName = "HelveticaNeue-Italics",

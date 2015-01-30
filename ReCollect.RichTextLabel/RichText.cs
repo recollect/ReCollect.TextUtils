@@ -59,6 +59,7 @@ namespace ReCollect
 		}
 
 		public UIColor LinkColor = UIColor.Blue; // Default link colour
+		public UIColor TextColor = UIColor.Black; // Default text colour
 
 		public RichText (string html)
 		{
@@ -147,7 +148,8 @@ namespace ReCollect
 			switch (node.Name) {
 			case "#document":
 				attributes.Add (new UIStringAttributes () {
-					Font = UIFont.FromName (FontName, fontSize)
+					Font = UIFont.FromName (FontName, fontSize),
+					ForegroundColor = TextColor
 				});
 				break;
 			case "h1":
