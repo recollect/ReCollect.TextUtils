@@ -54,11 +54,11 @@ namespace TextUtils_Test
 					"<font color=\"invalid\">Invalid</font><br/>" +
 				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
 			) {
-				LinkColor = UIColor.Orange,
-				TextColor = UIColor.FromRGB (52, 52, 52),
+				LinkColor = ReCollect.Color.FromRGB (255, 127, 0),
+				TextColor = ReCollect.Color.FromRGB (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
-				ItalicsFontName = "HelveticaNeue-Italics",
+				ItalicsFontName = "HelveticaNeue-Italic",
 			};
 
 			label.RichText = text;
