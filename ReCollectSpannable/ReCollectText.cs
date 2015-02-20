@@ -20,6 +20,8 @@ namespace ReCollect
 
 	public partial class ReCollectText
 	{
+		public event Action<string> HandleClick;
+
 		SpannableString _text = null;
 		public SpannableString FormattedText {
 			get {
@@ -66,7 +68,7 @@ namespace ReCollect
 					return new List<CharacterStyle> {
 						new ForegroundColorSpan (Text.LinkColor.AndroidColor),
 						new UnderlineSpan (),
-						new RichTextLinkSpan (Href)
+						new RichTextLinkSpan (Href, Text)
 					};
 				}
 			}
@@ -108,13 +110,16 @@ namespace ReCollect
 		}
 
 		class RichTextLinkSpan : ClickableSpan {
-			string href;
-			public RichTextLinkSpan (string href) {
-				this.href = href;
+			string Href;
+			ReCollectText Text;
+			public RichTextLinkSpan (string href, ReCollectText text) {
+				Href = href;
+				Text = text;
 			}
 			public override void OnClick (Android.Views.View view)
 			{
-				Console.WriteLine ("ON CLICK");
+				if (Text.HandleClick != null)
+					Text.HandleClick (Href);
 			}
 		}
 	}

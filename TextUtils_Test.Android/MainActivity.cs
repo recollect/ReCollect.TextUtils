@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Net;
+using Android.Text.Method;
 
 using ReCollect;
 
@@ -44,9 +46,15 @@ namespace TextUtils_Test.Android
 				FontSize = 18
 			};
 
+			text.HandleClick += (href) => {
+				StartActivity (new Intent(Intent.ActionView, global::Android.Net.Uri.Parse (href)));
+			};
+
 			// Get our button from the layout resource,
 			// and attach an event to it
 			var textview = FindViewById<TextView> (Resource.Id.textView1);
+			textview.Focusable = true;
+			textview.MovementMethod = LinkMovementMethod.Instance;
 			textview.TextFormatted = text.FormattedText;
 		}
 	}
