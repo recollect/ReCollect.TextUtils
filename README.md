@@ -1,4 +1,4 @@
-## ReCollect.RichTextLabel
+## ReCollect.TextUtils
 
 This library provides HTML parsing for both Android and iOS in Xamarin Applications.
 The HTML is parsed using the [Html Agility Pack](http://htmlagilitypack.codeplex.com/), 
