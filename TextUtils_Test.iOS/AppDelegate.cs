@@ -6,7 +6,7 @@ using Foundation;
 using UIKit;
 using ReCollect;
 
-namespace ReCollect.RichTextText_Test
+namespace TextUtils_Test
 {
 	// The UIApplicationDelegate for the application. This class is responsible for launching the
 	// User Interface of the application, as well as listening (and optionally responding) to
@@ -33,13 +33,13 @@ namespace ReCollect.RichTextText_Test
 
 			// Create a label that shows some supported Html
 			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 20);
-			var label = new RichTextLabel (bounds) {
+			var label = new ReCollectLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
 				Lines = 0
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
-			var text = new RichText (
+			var text = new ReCollectText (
 				"<h1>Header 1</h1>" +
 				"<h2>Header 2</h2>" +
 				"<h3>Header 3</h3>" +
@@ -70,8 +70,8 @@ namespace ReCollect.RichTextText_Test
 			// Create a tappable view that demonstrates that we are bubbling taps
 			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
 			tappable.Frame = new CGRect (10, 350, 200, 30);
-			var btn_label = new RichTextLabel (new CGRect (0, 0, 200, 30)) {
-				RichText = new RichText ("<b>Tap to check bubbling</b>")
+			var btn_label = new ReCollectLabel (new CGRect (0, 0, 200, 30)) {
+				RichText = new ReCollectText ("<b>Tap to check bubbling</b>")
 			};
 			tappable.AddSubview (btn_label);
 			tappable.AddGestureRecognizer (new UITapGestureRecognizer (tap => {

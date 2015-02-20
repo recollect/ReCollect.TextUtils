@@ -6,16 +6,16 @@ using CoreGraphics;
 
 namespace ReCollect
 {
-	public class RichTextLabel : UILabel
+	public class ReCollectLabel : UILabel
 	{
 		List<HtmlLink> HtmlLinks = new List<HtmlLink> {};
 
-		public RichTextLabel () : base ()
+		public ReCollectLabel () : base ()
 		{
 			Setup ();
 		}
 
-		public RichTextLabel (CGRect bounds) : base (bounds)
+		public ReCollectLabel (CGRect bounds) : base (bounds)
 		{
 			Setup ();
 		}
@@ -34,8 +34,8 @@ namespace ReCollect
 			}
 		}
 
-		RichText _rich_text = null;
-		public RichText RichText {
+		ReCollectText _rich_text = null;
+		public ReCollectText RichText {
 			get {
 				return _rich_text;
 			}
@@ -60,7 +60,7 @@ namespace ReCollect
 			return false;
 		}
 			
-		void FindLinks (RichText text) {
+		void FindLinks (ReCollectText text) {
 			// Build the list of links
 			HtmlLinks.Clear ();
 			text.AttributedText.EnumerateAttribute (
@@ -103,8 +103,8 @@ namespace ReCollect
 
 		class LinkGestureDelegate : UIGestureRecognizerDelegate
 		{
-			RichTextLabel Label;
-			public LinkGestureDelegate (RichTextLabel label) : base ()
+			ReCollectLabel Label;
+			public LinkGestureDelegate (ReCollectLabel label) : base ()
 			{
 				Label = label;
 			}

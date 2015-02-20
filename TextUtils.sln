@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReCollect.RichTextLabel", "ReCollect.RichTextLabel\ReCollect.RichTextLabel.csproj", "{F61173F9-7568-4C7D-932A-948613521EC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReCollectLabel", "ReCollectLabel\ReCollectLabel.csproj", "{F61173F9-7568-4C7D-932A-948613521EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReCollect.RichTextLabel_Test", "ReCollect.RichTextLabel_Test\ReCollect.RichTextLabel_Test.csproj", "{44D4E6C8-9B3C-4253-907C-B3B943294315}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextUtils_Test.iOS", "TextUtils_Test.iOS\TextUtils_Test.iOS.csproj", "{44D4E6C8-9B3C-4253-907C-B3B943294315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,7 +8,7 @@ using CoreGraphics;
 
 namespace ReCollect
 {
-	public class RichText
+	public class ReCollectText
 	{
 		public nfloat FontSize        = 18f;
 		public string FontName        = "Helvetica";
@@ -61,7 +61,7 @@ namespace ReCollect
 		public UIColor LinkColor = UIColor.Blue; // Default link colour
 		public UIColor TextColor = UIColor.Black; // Default text colour
 
-		public RichText (string html)
+		public ReCollectText (string html)
 		{
 			// Decode any HTML entities
 			Html = System.Web.HttpUtility.HtmlDecode (html);

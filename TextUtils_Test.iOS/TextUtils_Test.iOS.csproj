@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{44D4E6C8-9B3C-4253-907C-B3B943294315}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ReCollect.RichTextLabel_Test</RootNamespace>
+    <RootNamespace>TextUtils_Test</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>ReCollect.RichTextLabel_Test</AssemblyName>
   </PropertyGroup>
@@ -112,9 +112,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\ReCollect.RichTextLabel\ReCollect.RichTextLabel.csproj">
+    <ProjectReference Include="..\ReCollectLabel\ReCollectLabel.csproj">
       <Project>{F61173F9-7568-4C7D-932A-948613521EC2}</Project>
-      <Name>ReCollect.RichTextLabel</Name>
+      <Name>ReCollectLabel</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
