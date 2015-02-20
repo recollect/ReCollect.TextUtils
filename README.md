@@ -21,5 +21,5 @@ The following HTML is supported:
 * `<a href="URL"></a>`: Clickable link
 * `<font></font>`
   * Attribute `color` with supported format: `#FFFFFF`, or `rgb(255,0,0)`
-  * Attribute `` with supported format: `#FFFFFF`
+  * Attribute `font` with supported format: `Helvetica`
 
