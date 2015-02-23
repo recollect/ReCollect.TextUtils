@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ReCollect</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>ReCollect.RichTextLabel</AssemblyName>
+    <AssemblyName>ReCollect.TextUtils</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

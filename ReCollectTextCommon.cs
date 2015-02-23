@@ -4,7 +4,7 @@ using HtmlAgilityPack;
 
 namespace ReCollect
 {
-	public partial class ReCollectText
+	public partial class ReText
 	{
 		public int    FontSize        = 18;
 		public string FontName        = "Helvetica";
@@ -13,10 +13,10 @@ namespace ReCollect
 
 		string Html;
 
-		public Color LinkColor = Color.Blue;  // Default link colour
-		public Color TextColor = Color.Black; // Default text colour
+		public ReColor LinkColor = ReColor.Blue;  // Default link colour
+		public ReColor TextColor = ReColor.Black; // Default text colour
 
-		public ReCollectText (string html)
+		public ReText (string html)
 		{
 			// Decode any HTML entities
 			Html = System.Web.HttpUtility.HtmlDecode (html.Replace ("\n", ""));
@@ -106,7 +106,7 @@ namespace ReCollect
 						node_style = new FontStyle (attr.Value, this);
 						break;
 					case "color":
-						node_style = new ColorStyle (Color.Parse (attr.Value), this);
+						node_style = new ColorStyle (ReColor.Parse (attr.Value), this);
 						break;
 					}
 				}
@@ -146,44 +146,44 @@ namespace ReCollect
 		}
 
 		partial class TextStyle {
-			protected ReCollectText Text;
-			public TextStyle (ReCollectText text) {
+			protected ReText Text;
+			public TextStyle (ReText text) {
 				Text = text;
 			}
 		}
 
 		partial class HeaderStyle : TextStyle {
-			public HeaderStyle (float factor, ReCollectText text) : base (text) {
+			public HeaderStyle (float factor, ReText text) : base (text) {
 				Factor = factor;
 			}
 			public float Factor { get; set; }
 		}
 
 		partial class LinkStyle : TextStyle {
-			public LinkStyle (string href, ReCollectText text) : base (text) {
+			public LinkStyle (string href, ReText text) : base (text) {
 				Href = href;
 			}
 			public string Href { get; set; }
 		}
 
 		partial class ItalicStyle : TextStyle {
-			public ItalicStyle (ReCollectText text) : base (text) {}
+			public ItalicStyle (ReText text) : base (text) {}
 		}
 
 		partial class BoldStyle : TextStyle {
-			public BoldStyle (ReCollectText text) : base (text) {}
+			public BoldStyle (ReText text) : base (text) {}
 		}
 
 		partial class ColorStyle : TextStyle {
-			Color Color;
-			public ColorStyle (Color color, ReCollectText text) : base (text) {
+			ReColor Color;
+			public ColorStyle (ReColor color, ReText text) : base (text) {
 				Color = color;
 			}
 		}
 
 		partial class FontStyle : TextStyle {
 			protected string FontName;
-			public FontStyle (string fname, ReCollectText text) : base (text) {
+			public FontStyle (string fname, ReText text) : base (text) {
 				FontName = fname;
 			}
 		}

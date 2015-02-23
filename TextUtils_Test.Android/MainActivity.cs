@@ -23,7 +23,7 @@ namespace TextUtils_Test.Android
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			var text = new ReCollectText (
+			var text = new ReText (
 				"<h1>Header 1</h1>" +
 				"<h2>Header 2</h2>" +
 				"<h3>Header 3</h3>" +
@@ -38,8 +38,8 @@ namespace TextUtils_Test.Android
 				"<font color=\"invalid\">Invalid</font><br/>" +
 				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
 			) {
-				LinkColor = ReCollect.Color.FromRGB (255, 127, 0),
-				TextColor = ReCollect.Color.FromRGB (52, 52, 52),
+				LinkColor = new ReColor (255, 127, 0),
+				TextColor = new ReColor (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
 				ItalicsFontName = "HelveticaNeue-Italic",

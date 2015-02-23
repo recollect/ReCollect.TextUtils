@@ -33,13 +33,13 @@ namespace TextUtils_Test
 
 			// Create a label that shows some supported Html
 			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 20);
-			var label = new ReCollectLabel (bounds) {
+			var label = new ReLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
 				Lines = 0
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
-			var text = new ReCollectText (
+			var text = new ReText (
 				"<h1>Header 1</h1>" +
 				"<h2>Header 2</h2>" +
 				"<h3>Header 3</h3>" +
@@ -54,8 +54,8 @@ namespace TextUtils_Test
 					"<font color=\"invalid\">Invalid</font><br/>" +
 				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
 			) {
-				LinkColor = ReCollect.Color.FromRGB (255, 127, 0),
-				TextColor = ReCollect.Color.FromRGB (52, 52, 52),
+				LinkColor = new ReColor (UIColor.Orange),
+				TextColor = new ReColor (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
 				ItalicsFontName = "HelveticaNeue-Italic",
@@ -70,8 +70,8 @@ namespace TextUtils_Test
 			// Create a tappable view that demonstrates that we are bubbling taps
 			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
 			tappable.Frame = new CGRect (10, 350, 200, 30);
-			var btn_label = new ReCollectLabel (new CGRect (0, 0, 200, 30)) {
-				RichText = new ReCollectText ("<b>Tap to check bubbling</b>")
+			var btn_label = new ReLabel (new CGRect (0, 0, 200, 30)) {
+				RichText = new ReText ("<b>Tap to check bubbling</b>")
 			};
 			tappable.AddSubview (btn_label);
 			tappable.AddGestureRecognizer (new UITapGestureRecognizer (tap => {

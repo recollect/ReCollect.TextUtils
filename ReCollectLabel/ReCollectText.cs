@@ -8,7 +8,16 @@ using CoreGraphics;
 
 namespace ReCollect
 {
-	public partial class Color {
+	public partial class ReColor {
+		public ReColor (UIColor color) {
+			nfloat red, green, blue, alpha;
+			color.GetRGBA (out red, out green, out blue, out alpha);
+			R = (int)(255 * red);
+			G = (int)(255 * green);
+			B = (int)(255 * blue);
+			A = (int)(255 * alpha);
+		}
+
 		public UIColor UIColor {
 			get {
 				return new UIColor (R / 255.0f, G / 255.0f, B / 255.0f, 1.0f);
@@ -20,7 +29,7 @@ namespace ReCollect
 		public UIStringAttributes Attributes;
 	}
 
-	public partial class ReCollectText
+	public partial class ReText
 	{
 		public CGSize GetBoundedSize (CGSize max) {
 			return AttributedText.GetBoundingRect (

@@ -7,7 +7,7 @@ using Android.Graphics;
 
 namespace ReCollect
 {
-	public partial class Color {
+	public partial class ReColor {
 		public Android.Graphics.Color AndroidColor {
 			get {
 				return new Android.Graphics.Color (R, G, B);
@@ -18,7 +18,7 @@ namespace ReCollect
 	public partial class StyleWithRange {
 	}
 
-	public partial class ReCollectText
+	public partial class ReText
 	{
 		public event Action<string> HandleClick;
 
@@ -111,8 +111,8 @@ namespace ReCollect
 
 		class RichTextLinkSpan : ClickableSpan {
 			string Href;
-			ReCollectText Text;
-			public RichTextLinkSpan (string href, ReCollectText text) {
+			ReText Text;
+			public RichTextLinkSpan (string href, ReText text) {
 				Href = href;
 				Text = text;
 			}
