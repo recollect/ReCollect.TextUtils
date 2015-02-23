@@ -2,11 +2,12 @@
 
 This library provides HTML parsing for both Android and iOS in Xamarin Applications.
 The HTML is parsed using the [Html Agility Pack](http://htmlagilitypack.codeplex.com/), 
-and then emitted as rich-text for use within a mobile application.
+and then emitted as rich-text for use within a mobile application. This
+operation can be done by instanciating a `ReText` object and passing it HTML.
 
 On Android, the rich-text is emitted as a SpannableString that can be set on
 a `TextView`. Whereas, on iOS, rich-text is emitted as a `NSMutableAttributedString`,
-which can then be set on a `ReCollectLabel` (a subclass of `UILabel`).
+which can then be set on a `ReLabel` (a subclass of `UILabel`).
 
 This package includes a library for each platform as well as a test
 application for demonstration purposes.
