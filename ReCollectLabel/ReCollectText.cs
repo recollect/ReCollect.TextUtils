@@ -132,7 +132,8 @@ namespace ReCollect
 			override public UIStringAttributes Attributes {
 				get {
 					return new UIStringAttributes () {
-						Font = UIFont.FromName (FontName, Text.FontSize)
+						Font = UIFont.FromName (FontName, Text.FontSize),
+						ForegroundColor = Text.TextColor.UIColor
 					};
 				}
 			}
