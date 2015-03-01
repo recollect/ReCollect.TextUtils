@@ -104,7 +104,7 @@ namespace ReCollect
 
 		public override void TouchesBegan (NSSet touches, UIEvent evt)
 		{
-			base.TouchesEnded (touches, evt);
+			base.TouchesBegan (touches, evt);
 			foreach (var t in touches) {
 				var touch = t as UITouch;
 				var link = LinkAtPoint (touch.LocationInView (this));
