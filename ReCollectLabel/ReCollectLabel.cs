@@ -23,9 +23,6 @@ namespace ReCollect
 		void Setup ()
 		{
 			UserInteractionEnabled = true;
-			AddGestureRecognizer (new UITapGestureRecognizer () {
-				Delegate = new LinkGestureDelegate (this)
-			});
 		}
 
 		protected internal new NSAttributedString AttributedText {
@@ -46,18 +43,20 @@ namespace ReCollect
 			}
 		}
 
-		bool OpenLinkAtPoint (CGPoint point) {
+		Dictionary <string,HtmlLink> link_map = new Dictionary<string, HtmlLink> { };
+		HtmlLink LinkAtPoint (CGPoint point) {
+			if (link_map.ContainsKey (point.ToString ()))
+				return link_map [point.ToString ()];
+
+			var abs_point = new CGPoint (point.X - Bounds.X, point.Y - Bounds.Y);
 			foreach (var link in HtmlLinks) {
 				var bounds = BoundingRectForCharacterRange (_rich_text.AttributedText, link.Range);
-				if (bounds.Contains (point)) {
-					// Open the url if we can
-					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
-						UIApplication.SharedApplication.OpenUrl (link.Url);
-					}
-					return true;
+				if (bounds.Contains (abs_point)) {
+					link_map.Add (point.ToString (), link);
+					return link;
 				}
 			}
-			return false;
+			return null;
 		}
 			
 		void FindLinks (ReText text) {
@@ -96,24 +95,59 @@ namespace ReCollect
 			return layoutManager.BoundingRectForGlyphRange (glyphRange, textContainer);
 		}
 
+		// List of links that have been touched and will need to be unstyled
+		List <HtmlLink> touched_links = new List<HtmlLink> { };
+
+		public override void TouchesBegan (NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded (touches, evt);
+			foreach (var t in touches) {
+				var touch = t as UITouch;
+				var link = LinkAtPoint (touch.LocationInView (this));
+
+				if (link != null) {
+					// Store this link to clear the styles later
+					touched_links.Add (link);
+
+					// Style this link
+					_rich_text.AttributedText.AddAttributes (
+						new UIStringAttributes () {
+							BackgroundColor = UIColor.FromRGB (0.85f, 0.85f, 0.85f)
+						}, link.Range
+					);
+					base.AttributedText = _rich_text.AttributedText;
+					SetNeedsDisplay ();
+				}
+			}
+		}
+			
+		public override void TouchesEnded (NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded (touches, evt);
+
+			// Clear the touch styles on the currently touched links
+			foreach (var link in touched_links) {
+				_rich_text.AttributedText.RemoveAttribute (UIStringAttributeKey.BackgroundColor, link.Range);
+				base.AttributedText = _rich_text.AttributedText;
+				SetNeedsDisplay ();
+			}
+			touched_links.Clear ();
+
+			foreach (var t in touches) {
+				var touch = t as UITouch;
+				var link = LinkAtPoint (touch.LocationInView (this));
+				if (link != null) {
+					// Open the url if we can
+					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
+						UIApplication.SharedApplication.OpenUrl (link.Url);
+					}
+				}
+			}
+		}
+
 		class HtmlLink {
 			public NSRange Range;
 			public NSUrl Url;
-		}
-
-		class LinkGestureDelegate : UIGestureRecognizerDelegate
-		{
-			ReLabel Label;
-			public LinkGestureDelegate (ReLabel label) : base ()
-			{
-				Label = label;
-			}
-
-			public override bool ShouldReceiveTouch (UIGestureRecognizer recognizer, UITouch touch)
-			{
-				var point = touch.LocationInView (Label);
-				return Label.OpenLinkAtPoint (new CGPoint (point.X - Label.Bounds.X, point.Y - Label.Bounds.Y));
-			}
 		}
 	}
 }
