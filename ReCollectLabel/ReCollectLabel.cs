@@ -46,20 +46,37 @@ namespace ReCollect
 			}
 		}
 
-		Dictionary <string,HtmlLink> link_map = new Dictionary<string, HtmlLink> { };
-		HtmlLink LinkAtPoint (CGPoint point) {
-			if (link_map.ContainsKey (point.ToString ()))
-				return link_map [point.ToString ()];
+		HtmlLink LinkAtPoint (CGPoint point, nfloat radius) {
+			// Construct an area roughly the size of the finger
+			var touch_center = new CGPoint (point.X - Bounds.X, point.Y - Bounds.Y);
+			var touch_area = new CGRect (
+				                 touch_center.X - (radius / 2),
+				                 touch_center.Y - (radius / 2),
+				                 radius, radius
+			                 );
 
-			var abs_point = new CGPoint (point.X - Bounds.X, point.Y - Bounds.Y);
+			HtmlLink matching_link = null;
+			nfloat shortest = nint.MaxValue;
+
 			foreach (var link in HtmlLinks) {
 				var bounds = BoundingRectForCharacterRange (_rich_text.AttributedText, link.Range);
-				if (bounds.Contains (abs_point)) {
-					link_map.Add (point.ToString (), link);
-					return link;
+				var link_center = new CGPoint (
+					                  bounds.X + (bounds.Width / 2),
+					                  bounds.Y + (bounds.Height / 2)
+				                  );
+
+				if (bounds.IntersectsWith (touch_area)) {
+					var distance = NMath.Sqrt (
+						NMath.Pow (link_center.X - touch_center.X, 2) +
+						NMath.Pow (link_center.Y - touch_center.Y, 2)
+					);
+					if (distance < shortest) {
+						matching_link = link;
+						shortest = distance;
+					}
 				}
 			}
-			return null;
+			return matching_link;
 		}
 			
 		void FindLinks (ReText text) {
@@ -107,7 +124,7 @@ namespace ReCollect
 			base.TouchesBegan (touches, evt);
 			foreach (var t in touches) {
 				var touch = t as UITouch;
-				var link = LinkAtPoint (touch.LocationInView (this));
+				var link = LinkAtPoint (touch.LocationInView (this), touch.MajorRadius);
 
 				if (link != null) {
 					// Store this link to clear the styles later
@@ -139,7 +156,7 @@ namespace ReCollect
 
 			foreach (var t in touches) {
 				var touch = t as UITouch;
-				var link = LinkAtPoint (touch.LocationInView (this));
+				var link = LinkAtPoint (touch.LocationInView (this), touch.MajorRadius);
 				if (link != null) {
 					// Open the url if we can
 					var app = UIApplication.SharedApplication;

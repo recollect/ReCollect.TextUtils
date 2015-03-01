@@ -53,7 +53,7 @@ namespace TextUtils_Test
 					"<font color=\"#6a5acd\">SlateBlue</font> " +
 					"<font color=\"#F65\">Tomato</font> " +
 					"<font color=\"invalid\">Invalid</font><br/>" +
-				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
+				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a>\t</p>"
 			) {
 				LinkColor = new ReColor (UIColor.Orange),
 				TextColor = new ReColor (52, 52, 52),
