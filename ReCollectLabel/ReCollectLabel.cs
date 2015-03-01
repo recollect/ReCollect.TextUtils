@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UIKit;
@@ -116,20 +117,13 @@ namespace ReCollect
 			return layoutManager.BoundingRectForGlyphRange (glyphRange, textContainer);
 		}
 
-		// List of links that have been touched and will need to be unstyled
-		List <HtmlLink> touched_links = new List<HtmlLink> { };
-
-		public override void TouchesBegan (NSSet touches, UIEvent evt)
+		public async override void TouchesBegan (NSSet touches, UIEvent evt)
 		{
-			base.TouchesBegan (touches, evt);
 			foreach (var t in touches) {
 				var touch = t as UITouch;
 				var link = LinkAtPoint (touch.LocationInView (this), touch.MajorRadius);
 
 				if (link != null) {
-					// Store this link to clear the styles later
-					touched_links.Add (link);
-
 					// Style this link
 					_rich_text.AttributedText.AddAttributes (
 						new UIStringAttributes () {
@@ -138,27 +132,16 @@ namespace ReCollect
 					);
 					base.AttributedText = _rich_text.AttributedText;
 					SetNeedsDisplay ();
-				}
-			}
-		}
-			
-		public override void TouchesEnded (NSSet touches, UIEvent evt)
-		{
-			base.TouchesEnded (touches, evt);
 
-			// Clear the touch styles on the currently touched links
-			foreach (var link in touched_links) {
-				_rich_text.AttributedText.RemoveAttribute (UIStringAttributeKey.BackgroundColor, link.Range);
-				base.AttributedText = _rich_text.AttributedText;
-				SetNeedsDisplay ();
-			}
-			touched_links.Clear ();
+					// Wait half a second
+					await Task.Delay (500);
 
-			foreach (var t in touches) {
-				var touch = t as UITouch;
-				var link = LinkAtPoint (touch.LocationInView (this), touch.MajorRadius);
-				if (link != null) {
-					// Open the url if we can
+					// Remove the selected style
+					_rich_text.AttributedText.RemoveAttribute (UIStringAttributeKey.BackgroundColor, link.Range);
+					base.AttributedText = _rich_text.AttributedText;
+					SetNeedsDisplay ();
+
+					// Open the link
 					var app = UIApplication.SharedApplication;
 					if (link.ChromeUrl != null && app.CanOpenUrl (link.ChromeUrl)) {
 						app.OpenUrl (link.ChromeUrl);
@@ -167,6 +150,8 @@ namespace ReCollect
 					}
 				}
 			}
+
+			base.TouchesBegan (touches, evt);
 		}
 
 		class HtmlLink {
