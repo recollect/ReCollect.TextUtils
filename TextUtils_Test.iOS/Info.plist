@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>ReCollect.RichTextLabel_Test</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.ReCollect.RichTextLabel_Test</string>
+        <string>net.recollect.textutils</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -32,5 +32,17 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
+
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleURLName</key>
+                <string>textutils.recollect.net</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>recollectTextUtils</string>
+                </array>
+            </dict>
+        </array>
 </dict>
 </plist>

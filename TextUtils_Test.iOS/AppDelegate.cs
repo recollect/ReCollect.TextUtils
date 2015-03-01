@@ -36,7 +36,8 @@ namespace TextUtils_Test
 			var label = new ReLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
-				Lines = 0
+				Lines = 0,
+				XCallbackSuccessUrl = "recollectTextUtils://textutils.recollect.net"
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
 			var text = new ReText (
@@ -58,7 +59,7 @@ namespace TextUtils_Test
 				TextColor = new ReColor (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
-				ItalicsFontName = "HelveticaNeue-Italic",
+				ItalicsFontName = "HelveticaNeue-Italic"
 			};
 
 			label.RichText = text;

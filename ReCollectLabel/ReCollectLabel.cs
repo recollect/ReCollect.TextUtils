@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UIKit;
 using Foundation;
 using CoreGraphics;
@@ -24,6 +25,8 @@ namespace ReCollect
 		{
 			UserInteractionEnabled = true;
 		}
+
+		public string XCallbackSuccessUrl = "";
 
 		protected internal new NSAttributedString AttributedText {
 			set {
@@ -69,6 +72,7 @@ namespace ReCollect
 				delegate (NSObject attr, NSRange range, ref bool stop) {
 					if (attr != null) {
 						HtmlLinks.Add (new HtmlLink () {
+							XCallbackSuccessUrl = XCallbackSuccessUrl,
 							Range = range,
 							Url = (NSUrl) attr
 						});
@@ -138,16 +142,36 @@ namespace ReCollect
 				var link = LinkAtPoint (touch.LocationInView (this));
 				if (link != null) {
 					// Open the url if we can
-					if (UIApplication.SharedApplication.CanOpenUrl (link.Url)) {
-						UIApplication.SharedApplication.OpenUrl (link.Url);
+					var app = UIApplication.SharedApplication;
+					if (link.ChromeUrl != null && app.CanOpenUrl (link.ChromeUrl)) {
+						app.OpenUrl (link.ChromeUrl);
+					} else if (app.CanOpenUrl (link.Url)) {
+						app.OpenUrl (link.Url);
 					}
 				}
 			}
 		}
 
 		class HtmlLink {
+			public string XCallbackSuccessUrl = "";
 			public NSRange Range;
 			public NSUrl Url;
+			public NSUrl ChromeUrl {
+				get {
+					var appName = (NSString) NSBundle.MainBundle.InfoDictionary ["CFBundleDisplayName"];
+					if (Url.Scheme == "http" || Url.Scheme == "https") {
+						return new NSUrl (
+							string.Format (
+								"googlechrome-x-callback://x-callback-url/open/?x-source={0}&x-success={1}&url={2}",
+								System.Web.HttpUtility.UrlEncode (appName),
+								System.Web.HttpUtility.UrlEncode (XCallbackSuccessUrl),
+								System.Web.HttpUtility.UrlEncode (Url.AbsoluteString)
+							)
+						);
+					}
+					return null;
+				}
+			}
 		}
 	}
 }
