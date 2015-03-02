@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>ReCollect.RichTextLabel_Test</string>
 	<key>CFBundleIdentifier</key>
-        <string>net.recollect.textutils</string>
+	<string>net.recollect.textutils</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -13,7 +13,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>7.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -32,17 +32,16 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
-
-        <key>CFBundleURLTypes</key>
-        <array>
-            <dict>
-                <key>CFBundleURLName</key>
-                <string>textutils.recollect.net</string>
-                <key>CFBundleURLSchemes</key>
-                <array>
-                    <string>recollectTextUtils</string>
-                </array>
-            </dict>
-        </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>textutils.recollect.net</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>recollectTextUtils</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
