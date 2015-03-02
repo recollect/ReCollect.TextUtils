@@ -121,7 +121,11 @@ namespace ReCollect
 		{
 			foreach (var t in touches) {
 				var touch = t as UITouch;
-				var link = LinkAtPoint (touch.LocationInView (this), touch.MajorRadius);
+				var radius = (nfloat) 5f;
+				if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0))
+					radius = touch.MajorRadius;
+
+				var link = LinkAtPoint (touch.LocationInView (this), radius);
 
 				if (link != null) {
 					// Style this link
