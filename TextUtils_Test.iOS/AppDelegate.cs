@@ -37,7 +37,8 @@ namespace TextUtils_Test
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
 				Lines = 0,
-				XCallbackSuccessUrl = "recollectTextUtils://textutils.recollect.net"
+				XCallbackSuccessUrl = "recollectTextUtils://textutils.recollect.net",
+				XCallbackName = "Text Utils"
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
 			var text = new ReText (
