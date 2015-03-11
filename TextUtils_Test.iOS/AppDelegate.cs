@@ -49,6 +49,8 @@ namespace TextUtils_Test
 				"<h5>Header 5</h5>" +
 				"<p>Regular</p>" +
 				"<p><i>Italics</i></p>" +
+				"<p><b>This is <i>Bold+Italics</i></b></p>" +
+				"<p><i>This is <b>Italics+Bold</b></i></p>" +
 				"<b>BOLD! + BR</b><br />" +
 				"<font color=\"rgb(233,150,122)\">Salmon</font> " +
 					"<font color=\"#6a5acd\">SlateBlue</font> " +
@@ -60,7 +62,7 @@ namespace TextUtils_Test
 				TextColor = new ReColor (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
-				ItalicsFontName = "HelveticaNeue-Italic"
+				ItalicFontName = "HelveticaNeue-LightItalic"
 			};
 
 			label.RichText = text;

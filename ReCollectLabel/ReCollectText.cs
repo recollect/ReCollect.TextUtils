@@ -102,7 +102,7 @@ namespace ReCollect
 			override public UIStringAttributes Attributes {
 				get {
 					return new UIStringAttributes () {
-						Font = UIFont.FromName (Text.ItalicsFontName, Text.FontSize)
+						Font = UIFont.FromName (Text.ItalicFontName, Text.FontSize)
 					};
 				}
 			}
@@ -113,6 +113,16 @@ namespace ReCollect
 				get {
 					return new UIStringAttributes () {
 						Font = UIFont.FromName (Text.BoldFontName, Text.FontSize)
+					};
+				}
+			}
+		}
+
+		partial class BoldItalicStyle : TextStyle {
+			override public UIStringAttributes Attributes {
+				get {
+					return new UIStringAttributes () {
+						Font = UIFont.FromName (Text.BoldItalicFontName, Text.FontSize)
 					};
 				}
 			}

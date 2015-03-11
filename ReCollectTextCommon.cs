@@ -6,10 +6,11 @@ namespace ReCollect
 {
 	public partial class ReText
 	{
-		public int    FontSize        = 18;
-		public string FontName        = "Helvetica";
-		public string ItalicsFontName = "Helvetica-Italic";
-		public string BoldFontName    = "Helvetica-Bold";
+		public int    FontSize           = 18;
+		public string FontName           = "HelveticaNeue";
+		public string ItalicFontName     = "HelveticaNeue-Italic";
+		public string BoldFontName       = "HelveticaNeue-Bold";
+		public string BoldItalicFontName = "HelveticaNeue-BoldItalic";
 
 		string Html;
 
@@ -43,6 +44,14 @@ namespace ReCollect
 			public void Shift (int offset) {
 				Offset += offset;
 			}
+		}
+
+		bool HasParent (HtmlNode node, string name1, string name2="") {
+			foreach (var ancestor in node.AncestorsAndSelf ()) {
+				if (ancestor.Name == name1 || ancestor.Name == name2) 
+					return true;
+			}
+			return false;
 		}
 
 		TextWithStyles EmitTextWithAttrs (HtmlNode node, int fontSize) {
@@ -93,11 +102,17 @@ namespace ReCollect
 				break;
 			case "i":
 			case "em":
-				node_style = new ItalicStyle (this);
+				if (HasParent (node, "b", "strong"))
+					node_style = new BoldItalicStyle (this);
+				else
+					node_style = new ItalicStyle (this);
 				break;
 			case "b":
 			case "strong":
-				node_style = new BoldStyle (this);
+				if (HasParent (node, "i", "em"))
+					node_style = new BoldItalicStyle (this);
+				else
+					node_style = new BoldStyle (this);
 				break;
 			case "font":
 				foreach (var attr in node.Attributes) {
@@ -172,6 +187,10 @@ namespace ReCollect
 
 		partial class BoldStyle : TextStyle {
 			public BoldStyle (ReText text) : base (text) {}
+		}
+
+		partial class BoldItalicStyle : TextStyle {
+			public BoldItalicStyle (ReText text) : base (text) {}
 		}
 
 		partial class ColorStyle : TextStyle {
