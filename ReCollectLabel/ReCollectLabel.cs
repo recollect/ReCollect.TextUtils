@@ -8,9 +8,12 @@ using CoreGraphics;
 
 namespace ReCollect
 {
-	public class ReLabel : UILabel
+    
+    public class ReLabel : UILabel
 	{
-		List<HtmlLink> HtmlLinks = new List<HtmlLink> {};
+	    public event EventHandler<NSUrl> UrlTapped;
+
+        List<HtmlLink> HtmlLinks = new List<HtmlLink> {};
 
 		public ReLabel () : base ()
 		{
@@ -151,8 +154,14 @@ namespace ReCollect
 					var app = UIApplication.SharedApplication;
 					if (link.ChromeUrl != null && app.CanOpenUrl (link.ChromeUrl)) {
 						app.OpenUrl (link.ChromeUrl);
-					} else if (app.CanOpenUrl (link.Url)) {
-						app.OpenUrl (link.Url);
+					} else if (app.CanOpenUrl(link.Url))
+					{
+					    app.OpenUrl(link.Url);
+					}
+					else
+					{
+					    if (UrlTapped != null)
+                            UrlTapped(this, link.Url);
 					}
 				}
 			}
