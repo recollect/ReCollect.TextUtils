@@ -1,4 +1,4 @@
-## ReCollect.TextUtils
+# ReCollect.TextUtils
 
 This library provides HTML parsing for both Android and iOS in Xamarin Applications.
 The HTML is parsed using the [Html Agility Pack](http://htmlagilitypack.codeplex.com/), 
@@ -12,7 +12,7 @@ which can then be set on a `ReLabel` (a subclass of `UILabel`).
 This package includes a library for each platform as well as a test
 application for demonstration purposes.
 
-### Supported HTML
+## Supported HTML
 
 The following HTML is supported:
 * `<h1><h1>` ... `<h5></h5>`
@@ -24,3 +24,6 @@ The following HTML is supported:
   * Attribute `color` with supported format: `#FFFFFF`, or `rgb(255,0,0)`
   * Attribute `font` with supported format: `Helvetica`
 
+## License
+
+This project is licensed under the MIT License. See LICENSE.md
