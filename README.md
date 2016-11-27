@@ -23,7 +23,3 @@ The following HTML is supported:
 * `<font></font>`
   * Attribute `color` with supported format: `#FFFFFF`, or `rgb(255,0,0)`
   * Attribute `font` with supported format: `Helvetica`
-
-## License
-
-This project is licensed under the MIT License. See LICENSE.md
