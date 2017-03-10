@@ -42,7 +42,7 @@ namespace TextUtils_Test.Android
 				TextColor = new ReColor (52, 52, 52),
 				FontName = "HelveticaNeue-Light",
 				BoldFontName = "HelveticaNeue-Bold",
-				ItalicsFontName = "HelveticaNeue-Italic",
+				ItalicFontName = "HelveticaNeue-Italic",
 				FontSize = 18
 			};
 
