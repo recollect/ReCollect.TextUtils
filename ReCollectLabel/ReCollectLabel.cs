@@ -30,9 +30,6 @@ namespace ReCollect
 			UserInteractionEnabled = true;
 		}
 
-		public string XCallbackSuccessUrl = "";
-		public string XCallbackName = (NSString) NSBundle.MainBundle.InfoDictionary ["CFBundleDisplayName"];
-
 		protected internal new NSAttributedString AttributedText {
 			set {
 				throw new Exception ("Set RichText instead of AttributedText!");
@@ -94,8 +91,6 @@ namespace ReCollect
 				delegate (NSObject attr, NSRange range, ref bool stop) {
 					if (attr != null) {
 						HtmlLinks.Add (new HtmlLink () {
-							XCallbackSuccessUrl = XCallbackSuccessUrl,
-							XCallbackName = XCallbackName,
 							Range = range,
 							Url = (NSUrl) attr
 						});
@@ -170,8 +165,6 @@ namespace ReCollect
 		}
 
 		class HtmlLink {
-			public string XCallbackSuccessUrl = "";
-			public string XCallbackName = "";
 			public NSRange Range;
 			public NSUrl Url;
 			public NSUrl ChromeUrl {
@@ -179,9 +172,7 @@ namespace ReCollect
 					if (Url.Scheme == "http" || Url.Scheme == "https") {
 						return new NSUrl (
 							string.Format (
-								"googlechrome-x-callback://x-callback-url/open/?x-source={0}&x-success={1}&url={2}",
-								Uri.EscapeDataString (XCallbackName),
-								Uri.EscapeDataString (XCallbackSuccessUrl),
+								"googlechrome-x-callback://x-callback-url/open/?url={0}",
 								Uri.EscapeDataString (Url.AbsoluteString)
 							)
 						);
