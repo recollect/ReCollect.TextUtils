@@ -36,9 +36,7 @@ namespace TextUtils_Test
 			var label = new ReLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
-				Lines = 0,
-				XCallbackSuccessUrl = "recollectTextUtils://textutils.recollect.net",
-				XCallbackName = "Text Utils"
+				Lines = 0
 			};
 			label.Layer.BorderColor = UIColor.Clear.CGColor;
 			var text = new ReText (
