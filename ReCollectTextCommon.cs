@@ -6,9 +6,7 @@ namespace ReCollect
 {
     public partial class ReText
     {
-		public static ReTextAccessibilityHelpText AccessibilityHelpText = new ReTextAccessibilityHelpText();
-  
-        public int FontSize = 18;
+		public int FontSize = 18;
         public string FontName = "HelveticaNeue";
         public string ItalicFontName = "HelveticaNeue-Italic";
         public string BoldFontName = "HelveticaNeue-Bold";
@@ -207,11 +205,6 @@ namespace ReCollect
 			public FontStyle (string fname, ReText text) : base (text) {
 				FontName = fname;
 			}
-		}
-
-		public class ReTextAccessibilityHelpText {
-			public string ThisContentContainsLinks = "This content contains links. Swipe down to start interacting with those links.";
-			public string DoubleTapToActivate = "You have selected a link with text: {0}. Double tap to activate.";
 		}
     }
 

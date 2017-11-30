@@ -122,7 +122,13 @@ namespace ReCollect
 
                         // Get the link name, and clear all attributes
                         var link_text = StripAttributesFromRange(text.AttributedText, range);
-                        var a11y_label = string.Format(ReText.AccessibilityHelpText.DoubleTapToActivate, link_text);
+                        var a11y_text = GetLocalizationString(
+                            "RCTextUtils__SelectedLinkDoubleTapToActivate",
+                            "You have selected a link with text: {0}. Double tap to activate.",
+                            "VoiceOver text when a link is active, saying double tap to navigate."
+                        );
+
+                        var a11y_label = string.Format(a11y_text, link_text);
 
                         var custom_action = new UIAccessibilityCustomAction(a11y_label, (UIAccessibilityCustomAction arg) =>
                         {
@@ -137,9 +143,22 @@ namespace ReCollect
 
             if (actions.Count > 0)
             {
-                AccessibilityHint = ReText.AccessibilityHelpText.ThisContentContainsLinks;
+                AccessibilityHint = GetLocalizationString(
+                    "RCTextUtils__ThisContentContainsLinks",
+                    "This content contains links. Swipe down to start interacting with those links.",
+                    "VoiceOver text when a label containing links is active."
+                );
                 AccessibilityCustomActions = actions.ToArray();
             }
+        }
+
+        string GetLocalizationString (string msgid, string default_value, string comment)
+        {
+            var msgstr = NSBundle.MainBundle.LocalizedString(msgid, comment);
+            if (msgstr == msgid)
+                return default_value;
+            else
+                return msgstr;
         }
 
         NSMutableAttributedString StripAttributesFromRange (NSAttributedString text, NSRange range)
