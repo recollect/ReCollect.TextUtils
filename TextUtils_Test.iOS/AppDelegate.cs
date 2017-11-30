@@ -54,7 +54,8 @@ namespace TextUtils_Test
 					"<font color=\"#6a5acd\">SlateBlue</font> " +
 					"<font color=\"#F65\">Tomato</font> " +
 					"<font color=\"invalid\">Invalid</font><br/>" +
-				"<p>Link: <a href=\"http://www.recollect.net\">ReCollect</a></p>"
+				"<p>Link: <a href=\"http://www.recollect.net\">Link to ReCollect.net</a></p>" +
+                "<p>Link2: <a href=\"http://www.google.com\">Link to Google</a></p>"
 			) {
 				LinkColor = new ReColor (UIColor.Orange),
 				TextColor = new ReColor (52, 52, 52),
@@ -71,7 +72,7 @@ namespace TextUtils_Test
 
 			// Create a tappable view that demonstrates that we are bubbling taps
 			var tappable = new UIView () { BackgroundColor = UIColor.LightGray };
-			tappable.Frame = new CGRect (10, 350, 200, 30);
+            tappable.Frame = new CGRect (10, label.Frame.Bottom + 30, 200, 30);
 			var btn_label = new ReLabel (new CGRect (0, 0, 200, 30)) {
 				RichText = new ReText ("<b>Tap to check bubbling</b>")
 			};
