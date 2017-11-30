@@ -32,7 +32,7 @@ namespace TextUtils_Test
 			window.BackgroundColor = UIColor.White;
 
 			// Create a label that shows some supported Html
-			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 20);
+			var bounds = new CGRect (10, 100, window.Bounds.Width - 20, 400);
 			var label = new ReLabel (bounds) {
 				BackgroundColor = UIColor.Clear,
 				AutosizesSubviews = true,
