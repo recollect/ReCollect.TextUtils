@@ -109,10 +109,10 @@ namespace ReCollect
 			}
 		}
 
-		class RichTextLinkSpan : ClickableSpan {
+        class RichTextLinkSpan : URLSpan {
 			string Href;
 			ReText Text;
-			public RichTextLinkSpan (string href, ReText text) {
+            public RichTextLinkSpan (string href, ReText text) : base (href) {
 				Href = href;
 				Text = text;
 			}
