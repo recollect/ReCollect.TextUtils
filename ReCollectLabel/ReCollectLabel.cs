@@ -235,23 +235,25 @@ namespace ReCollect
                 _rich_text.AttributedText.RemoveAttribute(UIStringAttributeKey.BackgroundColor, link.Range);
                 base.AttributedText = _rich_text.AttributedText;
                 SetNeedsDisplay();
+
+
+                // Open the link
+                var app = UIApplication.SharedApplication;
+                if (link.ChromeUrl != null && app.CanOpenUrl(link.ChromeUrl))
+                {
+                    app.OpenUrl(link.ChromeUrl);
+                }
+                else if (app.CanOpenUrl(link.Url))
+                {
+                    app.OpenUrl(link.Url);
+                }
+                else
+                {
+                    if (UrlTapped != null)
+                        UrlTapped(this, link.Url);
+                }
             }
 
-            // Open the link
-            var app = UIApplication.SharedApplication;
-            if (link.ChromeUrl != null && app.CanOpenUrl(link.ChromeUrl))
-            {
-                app.OpenUrl(link.ChromeUrl);
-            }
-            else if (app.CanOpenUrl(link.Url))
-            {
-                app.OpenUrl(link.Url);
-            }
-            else
-            {
-                if (UrlTapped != null)
-                    UrlTapped(this, link.Url);
-            }
         }
 
         class HtmlLink
