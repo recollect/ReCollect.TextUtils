@@ -35,12 +35,15 @@ namespace ReCollect
 				while (parsed.Styles.Count > 0) {
 					var ranged_styles = parsed.Styles.Pop ();
 					foreach (var style in ranged_styles.Style.Styles) {
-						_text.SetSpan (
-							style,
-							ranged_styles.Offset,
-							ranged_styles.Offset + ranged_styles.Length,
-							SpanTypes.ExclusiveExclusive
-						);
+                        if (ranged_styles.Length > 0)
+                        {
+                            _text.SetSpan(
+                                style,
+                                ranged_styles.Offset,
+                                ranged_styles.Offset + ranged_styles.Length,
+                                SpanTypes.ExclusiveExclusive
+                            );
+                        }
 					}
 				}
 
