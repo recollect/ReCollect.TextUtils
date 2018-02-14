@@ -20,6 +20,8 @@ namespace ReCollect
 
         List<HtmlLink> HtmlLinks = new List<HtmlLink> { };
 
+        public UIEdgeInsets EdgeInsets { get; set; }
+
         public ReLabel() : base()
         {
             Setup();
@@ -34,6 +36,11 @@ namespace ReCollect
         {
             UserInteractionEnabled = true;
             AccessibilityTraits = UIAccessibilityTrait.AllowsDirectInteraction;
+        }
+
+        public override void DrawText(CoreGraphics.CGRect rect)
+        {
+            base.DrawText(EdgeInsets.InsetRect(rect));
         }
 
         protected internal new NSAttributedString AttributedText
