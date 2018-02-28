@@ -70,6 +70,47 @@ namespace ReCollect
 			}
 		}
 
+        NSAttributedString _NSAttributedString = null;
+        public NSAttributedString NSAttributedString
+        {
+            get
+            {
+                if (_NSAttributedString != null)
+                    return _NSAttributedString;
+
+                NSAttributedStringDocumentAttributes importParams = new NSAttributedStringDocumentAttributes();
+                importParams.DocumentType = NSDocumentType.HTML;
+                NSError error = new NSError();
+                error = null;
+
+                var parsed = ParseHtml();
+
+                _NSAttributedString = new NSAttributedString(Html, importParams, ref error);
+
+                NSMutableAttributedString att = new NSMutableAttributedString(_NSAttributedString);
+                att.BeginEditing();
+                while (parsed.Styles.Count > 0)
+                {
+                    var ranged_attrs = parsed.Styles.Pop();
+                    var attributes = (NSMutableDictionary)ranged_attrs.Style.Attributes.Dictionary;
+
+                    if (attributes["NSLink"] != null)
+                    {
+                        attributes["Link"] = attributes["NSLink"];
+                        attributes.Remove(new NSString("NSLink"));
+                    }
+
+                    att.AddAttributes(
+                        attributes,
+                        new NSRange(ranged_attrs.Offset, ranged_attrs.Length)
+                    );
+                }
+                att.EndEditing();
+
+                return att;
+            }
+        }
+
 		partial class TextStyle {
 			public virtual UIStringAttributes Attributes { get; set; }
 		}
