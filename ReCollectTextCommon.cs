@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using HtmlAgilityPack;
 
 namespace ReCollect
@@ -12,21 +13,21 @@ namespace ReCollect
         public string BoldFontName = "HelveticaNeue-Bold";
         public string BoldItalicFontName = "HelveticaNeue-BoldItalic";
 
-		string Html;
+        string Html;
 
 		public ReColor LinkColor = ReColor.Blue;  // Default link colour
 		public ReColor TextColor = ReColor.Black; // Default text colour
 
-		public ReText (string html)
+        public ReText (string html)
 		{
 			// Decode any HTML entities
-			Html = System.Web.HttpUtility.HtmlDecode (html.Replace ("\n", ""));
+            Html = System.Web.HttpUtility.HtmlDecode (html.Replace ("\n", ""));
 		}
 
 		TextWithStyles ParseHtml () {
 			// Parse HTML
 			var doc = new HtmlDocument ();
-			doc.LoadHtml (Html);
+            doc.LoadHtml (Html);
 
 			// Emit Text with Attributes
 			return EmitTextWithAttrs (doc.DocumentNode, FontSize);
@@ -75,6 +76,9 @@ namespace ReCollect
 					node.InnerHtml = node.InnerHtml + "\n";
 				}
 				break;
+            case "img":
+                    node.InnerHtml = node.InnerHtml + " img ";
+                break;
 			}
 
 			// Add to the array of attributes
@@ -100,6 +104,9 @@ namespace ReCollect
 			case "a":
 				node_style = new LinkStyle (node.GetAttributeValue ("href", ""), this);
 				break;
+            case "img":
+                node_style = new ImageStyle(node.GetAttributeValue("src", ""), this);
+                break;
 			case "i":
 			case "em":
 				if (HasParent (node, "b", "strong"))
@@ -134,13 +141,14 @@ namespace ReCollect
 					break;
 				case HtmlNodeType.Element:
 				case HtmlNodeType.Document:
-					var child_text = EmitTextWithAttrs (child, fontSize);
-					foreach (var ranged_attrs in child_text.Styles) {
-						// Shift the range forward
-						ranged_attrs.Shift (node_text.Text.Length);
-						node_text.Styles.Push (ranged_attrs);
-					}
-					node_text.Text += child_text.Text;
+                    var child_text = EmitTextWithAttrs(child, fontSize);
+                    foreach (var ranged_attrs in child_text.Styles)
+                    {
+                        // Shift the range forward
+                        ranged_attrs.Shift(node_text.Text.Length);
+                        node_text.Styles.Push(ranged_attrs);
+                    }
+                    node_text.Text += child_text.Text;   
 					break;
 				case HtmlNodeType.Text:
 					node_text.Text += child.InnerText;
@@ -173,6 +181,15 @@ namespace ReCollect
 			}
 			public float Factor { get; set; }
 		}
+
+        partial class ImageStyle : TextStyle
+        {
+            public ImageStyle(string src, ReText text) : base(text)
+            {
+                Src = src;
+            }
+            public string Src { get; set; }
+        }
 
 		partial class LinkStyle : TextStyle {
 			public LinkStyle (string href, ReText text) : base (text) {

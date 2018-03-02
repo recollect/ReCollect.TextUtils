@@ -50,19 +50,25 @@ namespace ReCollect
 				// Apply attributes
 				_AttributedText = new NSMutableAttributedString (parsed.Text);
 				_AttributedText.BeginEditing ();
-				while (parsed.Styles.Count > 0) {
-					var ranged_attrs = parsed.Styles.Pop ();
-					var attributes = (NSMutableDictionary) ranged_attrs.Style.Attributes.Dictionary;
+                while (parsed.Styles.Count > 0)
+                {
+                    var ranged_attrs = parsed.Styles.Pop();
+                    if (ranged_attrs.Style.Attributes != null){
+                        var attributes = (NSMutableDictionary)ranged_attrs.Style.Attributes.Dictionary;
 
-					if (attributes ["NSLink"] != null) {
-						attributes ["Link"] = attributes ["NSLink"];
-						attributes.Remove (new NSString ("NSLink"));
-					}
+                        if (attributes["NSLink"] != null)
+                        {
+                            attributes["Link"] = attributes["NSLink"];
+                            attributes.Remove(new NSString("NSLink"));
+                        }
 
-					_AttributedText.AddAttributes (
-						attributes,
-						new NSRange (ranged_attrs.Offset, ranged_attrs.Length)
-					);
+                        _AttributedText.AddAttributes(
+                            attributes,
+                            new NSRange(ranged_attrs.Offset, ranged_attrs.Length)
+                        );
+                    }else{
+                        LoadImage(ranged_attrs);
+                    }
 				}
 				_AttributedText.EndEditing ();
 
@@ -70,48 +76,23 @@ namespace ReCollect
 			}
 		}
 
-        NSAttributedString _NSAttributedString = null;
-        public NSAttributedString NSAttributedString
+        void LoadImage(StyleWithRange ranged_styles)
         {
-            get
+            ImageStyle imageStyle = (ImageStyle)ranged_styles.Style;
+            using (var url = new NSUrl(imageStyle.Src))
+            using (var data = NSData.FromUrl(url))
             {
-                if (_NSAttributedString != null)
-                    return _NSAttributedString;
-
-                NSAttributedStringDocumentAttributes importParams = new NSAttributedStringDocumentAttributes();
-                importParams.DocumentType = NSDocumentType.HTML;
-                NSError error = new NSError();
-                error = null;
-
-                var parsed = ParseHtml();
-
-                _NSAttributedString = new NSAttributedString(Html, importParams, ref error);
-
-                NSMutableAttributedString att = new NSMutableAttributedString(_NSAttributedString);
-                att.BeginEditing();
-                while (parsed.Styles.Count > 0)
-                {
-                    var ranged_attrs = parsed.Styles.Pop();
-                    var attributes = (NSMutableDictionary)ranged_attrs.Style.Attributes.Dictionary;
-
-                    if (attributes["NSLink"] != null)
-                    {
-                        attributes["Link"] = attributes["NSLink"];
-                        attributes.Remove(new NSString("NSLink"));
-                    }
-
-                    att.AddAttributes(
-                        attributes,
-                        new NSRange(ranged_attrs.Offset, ranged_attrs.Length)
-                    );
-                }
-                att.EndEditing();
-
-                return att;
+                var img = UIImage.LoadFromData(data);
+                var attachment = new NSTextAttachment();
+                attachment.Image = img;
+                _AttributedText.Replace(new NSRange(ranged_styles.Offset, ranged_styles.Length), NSAttributedString.CreateFrom(attachment));
             }
         }
 
-		partial class TextStyle {
+
+
+
+     	partial class TextStyle {
 			public virtual UIStringAttributes Attributes { get; set; }
 		}
 
@@ -125,6 +106,7 @@ namespace ReCollect
 				}
 			}
 		}
+
 
 		partial class LinkStyle : TextStyle {
 			override public UIStringAttributes Attributes {

@@ -4,6 +4,8 @@ using ReCollect;
 using Android.Text;
 using Android.Text.Style;
 using Android.Graphics;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace ReCollect
 {
@@ -21,9 +23,9 @@ namespace ReCollect
 	public partial class ReText
 	{
 		public event Action<string> HandleClick;
-
 		SpannableString _text = null;
-		public SpannableString FormattedText {
+
+        public SpannableString FormattedText {
 			get {
 				if (_text != null)
 					return _text;
@@ -34,22 +36,39 @@ namespace ReCollect
 				_text = new SpannableString (parsed.Text);
 				while (parsed.Styles.Count > 0) {
 					var ranged_styles = parsed.Styles.Pop ();
-					foreach (var style in ranged_styles.Style.Styles) {
-                        if (ranged_styles.Length > 0)
+                    if (ranged_styles.Style.Styles != null)
+                    {
+                        foreach (var style in ranged_styles.Style.Styles)
                         {
-                            _text.SetSpan(
-                                style,
-                                ranged_styles.Offset,
-                                ranged_styles.Offset + ranged_styles.Length,
-                                SpanTypes.ExclusiveExclusive
-                            );
+                            if (ranged_styles.Length > 0)
+                            {
+                                _text.SetSpan(
+                                    style,
+                                    ranged_styles.Offset,
+                                    ranged_styles.Offset + ranged_styles.Length,
+                                    SpanTypes.ExclusiveExclusive
+                                );
+                            }
                         }
-					}
+                    }
+                    else 
+                    {
+                        LoadImage(ranged_styles);
+                    }
 				}
 
 				return _text;
 			}
 		}
+
+        void LoadImage(StyleWithRange ranged_styles){
+            var webClient = new WebClient();
+            ImageStyle imageStyle = (ImageStyle)ranged_styles.Style;
+            byte[] imageBytes = webClient.DownloadData(imageStyle.Src);
+            Bitmap b = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+
+            _text.SetSpan(new ImageSpan(b,SpanAlign.Baseline),ranged_styles.Offset,ranged_styles.Offset + ranged_styles.Length ,SpanTypes.ExclusiveExclusive);
+        }
 
 		partial class TextStyle {
 			public virtual List<CharacterStyle> Styles { get; set; }
