@@ -78,14 +78,17 @@ namespace ReCollect
 
         void LoadImage(StyleWithRange ranged_styles)
         {
-            ImageStyle imageStyle = (ImageStyle)ranged_styles.Style;
-            using (var url = new NSUrl(imageStyle.Src))
-            using (var data = NSData.FromUrl(url))
+            ImageStyle imageStyle = ranged_styles.Style as ImageStyle;
+            if (imageStyle != null)
             {
-                var img = UIImage.LoadFromData(data);
-                var attachment = new NSTextAttachment();
-                attachment.Image = img;
-                _AttributedText.Replace(new NSRange(ranged_styles.Offset, ranged_styles.Length), NSAttributedString.CreateFrom(attachment));
+                using (var url = new NSUrl(imageStyle.Src))
+                using (var data = NSData.FromUrl(url))
+                {
+                    var img = UIImage.LoadFromData(data);
+                    var attachment = new NSTextAttachment();
+                    attachment.Image = img;
+                    _AttributedText.Replace(new NSRange(ranged_styles.Offset, ranged_styles.Length), NSAttributedString.CreateFrom(attachment));
+                }
             }
         }
 

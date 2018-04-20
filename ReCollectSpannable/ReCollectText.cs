@@ -62,12 +62,15 @@ namespace ReCollect
 		}
 
         void LoadImage(StyleWithRange ranged_styles){
-            var webClient = new WebClient();
-            ImageStyle imageStyle = (ImageStyle)ranged_styles.Style;
-            byte[] imageBytes = webClient.DownloadData(imageStyle.Src);
-            Bitmap b = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+            ImageStyle imageStyle = ranged_styles.Style as ImageStyle;
+            if (imageStyle != null)
+            {
+                var webClient = new WebClient();
+                byte[] imageBytes = webClient.DownloadData(imageStyle.Src);
+                Bitmap b = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
 
-            _text.SetSpan(new ImageSpan(b,SpanAlign.Baseline),ranged_styles.Offset,ranged_styles.Offset + ranged_styles.Length ,SpanTypes.ExclusiveExclusive);
+                _text.SetSpan(new ImageSpan(b, SpanAlign.Baseline), ranged_styles.Offset, ranged_styles.Offset + ranged_styles.Length, SpanTypes.ExclusiveExclusive);
+            }
         }
 
 		partial class TextStyle {
