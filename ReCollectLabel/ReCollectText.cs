@@ -81,7 +81,7 @@ namespace ReCollect
             ImageStyle imageStyle = ranged_styles.Style as ImageStyle;
             if (imageStyle != null)
             {
-                using (var url = new NSUrl(imageStyle.Src))
+                using (var url = new NSUrl(imageStyle.Src.Trim()))
                 using (var data = NSData.FromUrl(url))
                 {
                     var img = UIImage.LoadFromData(data);

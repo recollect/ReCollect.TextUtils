@@ -66,7 +66,7 @@ namespace ReCollect
             if (imageStyle != null)
             {
                 var webClient = new WebClient();
-                byte[] imageBytes = webClient.DownloadData(imageStyle.Src);
+                byte[] imageBytes = webClient.DownloadData(imageStyle.Src.Trim());
                 Bitmap b = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
 
                 _text.SetSpan(new ImageSpan(b, SpanAlign.Baseline), ranged_styles.Offset, ranged_styles.Offset + ranged_styles.Length, SpanTypes.ExclusiveExclusive);
