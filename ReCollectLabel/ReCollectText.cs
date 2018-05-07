@@ -84,7 +84,7 @@ namespace ReCollect
                 using (var url = new NSUrl(imageStyle.Src.Trim()))
                 using (var data = NSData.FromUrl(url))
                 {
-                    var img = UIImage.LoadFromData(data);
+                    var img = UIImage.LoadFromData(data,ImageSize);
                     var attachment = new NSTextAttachment();
                     attachment.Image = img;
                     _AttributedText.Replace(new NSRange(ranged_styles.Offset, ranged_styles.Length), NSAttributedString.CreateFrom(attachment));

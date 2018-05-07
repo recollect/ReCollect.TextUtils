@@ -8,6 +8,7 @@ namespace ReCollect
     public partial class ReText
     {
 		public int FontSize = 18;
+        public int ImageSize = 100;
         public string FontName = "HelveticaNeue";
         public string ItalicFontName = "HelveticaNeue-Italic";
         public string BoldFontName = "HelveticaNeue-Bold";
