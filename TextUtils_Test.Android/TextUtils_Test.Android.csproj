@@ -14,7 +14,7 @@
     <AndroidApplication>True</AndroidApplication>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AssemblyName>TextUtils_Test.Android</AssemblyName>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -71,5 +71,9 @@
       <Project>{292841CC-A412-4573-BE20-A32E8E0FDCAF}</Project>
       <Name>ReCollectSpannable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\IndieFlower.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans.ttf" />
   </ItemGroup>
 </Project>

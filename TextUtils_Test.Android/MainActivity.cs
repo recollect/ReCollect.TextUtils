@@ -10,6 +10,7 @@ using Android.Net;
 using Android.Text.Method;
 
 using ReCollect;
+using Android.Graphics;
 
 namespace TextUtils_Test.Android
 {
@@ -32,7 +33,8 @@ namespace TextUtils_Test.Android
 				"<p>Regular</p>" +
 				"<p><i>Italics</i></p>" +
 				"<b>BOLD! + BR</b><br />" +
-				"<font color=\"rgb(233,150,122)\">Salmon</font> " +
+                "<strong>strong + BR</strong><br />" +
+                "<font color=\"rgb(233,150,122)\">Salmon</font> " +
 				"<font color=\"#6a5acd\">SlateBlue</font> " +
 				"<font color=\"#F65\">Tomato</font> " +
 				"<font color=\"invalid\">Invalid</font><br/>" +
@@ -41,10 +43,8 @@ namespace TextUtils_Test.Android
 			) {
 				LinkColor = new ReColor (255, 127, 0),
 				TextColor = new ReColor (52, 52, 52),
-				FontName = "HelveticaNeue-Light",
-				BoldFontName = "HelveticaNeue-Bold",
-				ItalicFontName = "HelveticaNeue-Italic",
-				FontSize = 18
+                Font = Typeface.CreateFromAsset(this.Assets, "Fonts/IndieFlower.ttf"),
+                FontSize = 18
 			};
 
 			text.HandleClick += (href) => {

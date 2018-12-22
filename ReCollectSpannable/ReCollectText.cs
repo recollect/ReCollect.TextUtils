@@ -128,8 +128,8 @@ namespace ReCollect
 		partial class FontStyle : TextStyle {
 			override public List<CharacterStyle> Styles {
 				get {
-					return new List<CharacterStyle> {
-						new TypefaceSpan (FontName),
+                    return new List<CharacterStyle> {
+                        new TypefaceSpan (Font),
 						new AbsoluteSizeSpan (Text.FontSize, true)
 					};
 				}

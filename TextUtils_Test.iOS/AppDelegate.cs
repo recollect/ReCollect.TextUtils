@@ -59,10 +59,12 @@ namespace TextUtils_Test
 			) {
 				LinkColor = new ReColor (UIColor.Orange),
 				TextColor = new ReColor (52, 52, 52),
-				FontName = "HelveticaNeue-Light",
-				BoldFontName = "HelveticaNeue-Bold",
-				ItalicFontName = "HelveticaNeue-LightItalic"
-			};
+				FontName = "IndieFlower",
+                BoldFontName = "OpenSans-Bold",
+                BoldItalicFontName = "OpenSans-BoldItalic",
+                ItalicFontName = "OpenSans-Italic",
+                FontSize = 18
+            };
 
 			label.RichText = text;
 			var bounding_rect = text.GetBoundedSize (bounds.Size);

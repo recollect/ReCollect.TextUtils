@@ -124,4 +124,20 @@
       <Name>ReCollectLabel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Fonts\IndieFlower.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-SemiBoldItalic.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-SemiBold.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-Regular.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-LightItalic.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-Light.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-Italic.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-ExtraBold.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-BoldItalic.ttf" />
+    <BundleResource Include="Resources\Fonts\OpenSans-Bold.ttf" />
+  </ItemGroup>
 </Project>

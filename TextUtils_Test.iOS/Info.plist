@@ -45,5 +45,16 @@
 	</array>
 	<key>CFBundleName</key>
 	<string>ReCollect.RichTextLabel_Test</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/OpenSans-Bold.ttf</string>
+		<string>Fonts/OpenSans-BoldItalic.ttf</string>
+		<string>Fonts/OpenSans-ExtraBold.ttf</string>
+		<string>Fonts/OpenSans-ExtraBoldItalic.ttf</string>
+		<string>Fonts/OpenSans-Italic.ttf</string>
+		<string>Fonts/OpenSans-Light.ttf</string>
+		<string>Fonts/OpenSans-Regular.ttf</string>
+		<string>Fonts/IndieFlower.ttf</string>
+	</array>
 </dict>
 </plist>
