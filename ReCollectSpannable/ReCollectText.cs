@@ -128,11 +128,15 @@ namespace ReCollect
 		partial class FontStyle : TextStyle {
 			override public List<CharacterStyle> Styles {
 				get {
-                    return new List<CharacterStyle> {
-                        new TypefaceSpan (Font),
-						new AbsoluteSizeSpan (Text.FontSize, true)
-					};
-				}
+                    TypefaceSpan tfs;
+                    if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.P)
+                    {
+                        tfs = new TypefaceSpan(Font);
+                    } else {
+                        tfs = new CustomTypefaceSpan(Font);
+                    }
+                    return new List<CharacterStyle> {tfs, new AbsoluteSizeSpan (Text.FontSize, true)};
+                }
 			}
 		}
 
