@@ -39,8 +39,10 @@ namespace TextUtils_Test.Android
 				"<font color=\"#F65\">Tomato</font> " +
 				"<font color=\"invalid\">Invalid</font><br/>" +
 				"<p>Link: <a href=\"http://www.recollect.net\">Link to ReCollect</a></p>" +
-                "<p>Link: <a href=\"http://www.google.com\">Link to Google</a></p>"
-			) {
+                "<p>Link: <a href=\"http://www.google.com\">Link to Google</a></p>" +
+                "<p><ul><li>Hello</li><li>It's <b>Wataru</b></li></ul></p>" +
+                 "<p><ol><li>First item</li><li>Second item</li></ol></p>"
+            ) {
 				LinkColor = new ReColor (255, 127, 0),
 				TextColor = new ReColor (52, 52, 52),
                 Font = Typeface.CreateFromAsset(this.Assets, "Fonts/IndieFlower.ttf"),

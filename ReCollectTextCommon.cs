@@ -131,6 +131,9 @@ namespace ReCollect
                 case "img":
                     node_style = new ImageStyle(node.GetAttributeValue("src", ""), this);
                     break;
+                case "ul":
+                    node_style = new UnorderedListStyle(node.InnerHtml, this);
+                    break;
                 case "i":
                 case "em":
                     if (HasParent(node, "b", "strong"))
@@ -252,6 +255,16 @@ namespace ReCollect
         partial class BoldItalicStyle : TextStyle
         {
             public BoldItalicStyle(ReText text) : base(text) { }
+        }
+
+        partial class UnorderedListStyle : TextStyle
+        {
+            public UnorderedListStyle(string item, ReText text) : base(text)
+            {
+                Item = item;
+            }
+
+            public string Item { get; set; }
         }
 
         partial class ColorStyle : TextStyle
