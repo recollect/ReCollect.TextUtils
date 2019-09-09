@@ -97,6 +97,9 @@ namespace ReCollect
                 case "img":
                     node.InnerHtml = node.InnerHtml + " img ";
                     break;
+                case "li":
+                    node.InnerHtml = "\u2022 " + node.InnerHtml;
+                    break;
             }
 
             // Add to the array of attributes
