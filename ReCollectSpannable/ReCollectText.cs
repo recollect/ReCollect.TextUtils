@@ -104,20 +104,6 @@ namespace ReCollect
 			}
 		}
 
-        partial class UnorderedListStyle : TextStyle
-        {
-            override public List<CharacterStyle> Styles
-            {
-                get
-                {
-                    return new List<CharacterStyle> {
-                       
-                        new BulletListBuilder (Item)
-                    };
-                }
-            }
-        }
-
         partial class ItalicStyle : TextStyle {
 			override public List<CharacterStyle> Styles {
 				get {
@@ -156,39 +142,6 @@ namespace ReCollect
                 }
 			}
 		}
-
-        class BulletListBuilder : CharacterStyle
-        {
-
-            private static string SPACE = " ";
-            private static string BULLET_SYMBOL = "&#8226;";
-            private static string EOL = JavaSystem.GetProperty("line.separator");
-            private static string TAB = "\t";
-            string text;
-            public BulletListBuilder(string text)
-            {
-                List<string> items = new List<string>();
-                this.text = text;
-               
-
-                getBulletList(text);
-            }
-
-            public static StringBuilder getBulletList(string item)
-            {
-                StringBuilder listBulder = new StringBuilder();
-
-                ISpanned formattedItem = Android.Text.Html.FromHtml(BULLET_SYMBOL + SPACE + item);
-                listBulder.Append(TAB + formattedItem + EOL);
-
-                return listBulder;
-            }
-
-            public override void UpdateDrawState(TextPaint tp)
-            {
-                getBulletList(text);
-            }
-        }
 
         class RichTextLinkSpan : URLSpan {
 			string Href;

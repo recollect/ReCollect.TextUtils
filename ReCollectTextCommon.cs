@@ -27,6 +27,10 @@ namespace ReCollect
         public ReColor LinkColor = ReColor.Blue;  // Default link colour
         public ReColor TextColor = ReColor.Black; // Default text colour
 
+       
+        private bool isOrderedList = false;
+        int count = 1;
+
         public ReText(string html)
         {
             // Decode any HTML entities
@@ -74,6 +78,7 @@ namespace ReCollect
         {
             var node_text = new TextWithStyles();
             TextStyle node_style = null;
+            
 
             /**
 			 * Block level nodes:
@@ -98,7 +103,20 @@ namespace ReCollect
                     node.InnerHtml = node.InnerHtml + " img ";
                     break;
                 case "li":
-                    node.InnerHtml = "\u2022 " + node.InnerHtml;
+                    if (isOrderedList)
+                    {
+                        node.InnerHtml = count + ". " + node.InnerHtml + "\n";
+                        count++;
+                    }
+                    else
+                        node.InnerHtml = "\u2022 " + node.InnerHtml + "\n";
+                    break;
+                case "ul":
+                    isOrderedList = false;
+                    break;
+                case "ol":
+                    count = 1;
+                    isOrderedList = true;
                     break;
             }
 
@@ -133,9 +151,6 @@ namespace ReCollect
                     break;
                 case "img":
                     node_style = new ImageStyle(node.GetAttributeValue("src", ""), this);
-                    break;
-                case "ul":
-                    node_style = new UnorderedListStyle(node.InnerHtml, this);
                     break;
                 case "i":
                 case "em":
@@ -258,16 +273,6 @@ namespace ReCollect
         partial class BoldItalicStyle : TextStyle
         {
             public BoldItalicStyle(ReText text) : base(text) { }
-        }
-
-        partial class UnorderedListStyle : TextStyle
-        {
-            public UnorderedListStyle(string item, ReText text) : base(text)
-            {
-                Item = item;
-            }
-
-            public string Item { get; set; }
         }
 
         partial class ColorStyle : TextStyle
