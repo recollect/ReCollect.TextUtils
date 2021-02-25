@@ -112,6 +112,17 @@ namespace ReCollect
 			}
 		}
 
+		partial class BoldItalicStyle : TextStyle
+        {
+			override public List<CharacterStyle> Styles
+            {
+				get
+                {
+					return new List<CharacterStyle> { new StyleSpan(TypefaceStyle.BoldItalic) };
+                }
+            }
+        }
+
 		partial class BoldStyle : TextStyle {
 			override public List<CharacterStyle> Styles {
 				get {

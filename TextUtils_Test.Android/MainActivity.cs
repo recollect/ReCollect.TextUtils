@@ -25,6 +25,7 @@ namespace TextUtils_Test.Android
 			SetContentView (Resource.Layout.Main);
 
 			var text = new ReText (
+				"<p><b><i>BOLD ITALIC TEXT</i></b></p>" +
 				"<h1>Header 1</h1>" +
 				"<h2>Header 2</h2>" +
 				"<h3>Header 3</h3>" +
@@ -45,7 +46,7 @@ namespace TextUtils_Test.Android
             ) {
 				LinkColor = new ReColor (255, 127, 0),
 				TextColor = new ReColor (52, 52, 52),
-                Font = Typeface.CreateFromAsset(this.Assets, "Fonts/IndieFlower.ttf"),
+                Font = Typeface.CreateFromAsset(this.Assets, "Fonts/OpenSans.ttf"),
                 FontSize = 18
 			};
 
