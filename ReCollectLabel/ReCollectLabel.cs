@@ -22,6 +22,8 @@ namespace ReCollect
 
         public UIEdgeInsets EdgeInsets { get; set; }
 
+        public Action<string> CustomClickHref;
+
         public ReLabel() : base()
         {
             Setup();
@@ -68,7 +70,7 @@ namespace ReCollect
             }
         }
 
-        HtmlLink LinkAtPoint(CGPoint point, nfloat radius)
+        HtmlLink         LinkAtPoint(CGPoint point, nfloat radius)
         {
             // Construct an area roughly the size of the finger
             var touch_center = new CGPoint(point.X - Bounds.X, point.Y - Bounds.Y);
@@ -109,7 +111,7 @@ namespace ReCollect
         {
             // Build accessibility actions
             var actions = new List<UIAccessibilityCustomAction> { };
-
+            
             // Build the list of links
             HtmlLinks.Clear();
             text.AttributedText.EnumerateAttribute(
@@ -134,10 +136,10 @@ namespace ReCollect
                             "You have selected a link with text: {0}. Double tap to activate.",
                             "VoiceOver text when a link is active, saying double tap to navigate."
                         );
-
+                        
                         var a11y_label = string.Format(a11y_text, link_text);
 
-                        var custom_action = new UIAccessibilityCustomAction(a11y_label, (UIAccessibilityCustomAction arg) =>
+                        UIAccessibilityCustomAction custom_action = new UIAccessibilityCustomAction(a11y_label, null, (args) =>
                         {
                             TouchLink(link);
                             return true;
@@ -223,6 +225,7 @@ namespace ReCollect
 
         async Task TouchLink (HtmlLink link)
         {
+         
             if (link != null)
             {
                 // Style this link
@@ -258,6 +261,12 @@ namespace ReCollect
                 {
                     if (UrlTapped != null)
                         UrlTapped(this, link.Url);
+                }
+            } else
+            {
+                if (CustomClickHref != null)
+                {
+                    CustomClickHref(_rich_text.Href);
                 }
             }
 

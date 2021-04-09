@@ -39,6 +39,25 @@ namespace ReCollect
 			).Size;
 		}
 
+		public string Href { get
+            {
+				string _href = "";
+				var parsed = ParseHtml();
+
+				while (parsed.Styles.Count > 0)
+                {
+					var ranged_attrs = parsed.Styles.Pop();
+					if (ranged_attrs.Style is LinkStyle)
+					{
+						var style = ranged_attrs.Style as LinkStyle;
+						_href = style.Href;
+					}
+				}
+
+				return _href;
+            }
+		}
+
 		NSMutableAttributedString _AttributedText = null;
 		public NSMutableAttributedString AttributedText {
 			get {
