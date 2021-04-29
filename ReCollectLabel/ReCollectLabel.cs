@@ -139,7 +139,7 @@ namespace ReCollect
                         
                         var a11y_label = string.Format(a11y_text, link_text);
 
-                        UIAccessibilityCustomAction custom_action = new UIAccessibilityCustomAction(a11y_label, null, (args) =>
+                        UIAccessibilityCustomAction custom_action = new UIAccessibilityCustomAction(a11y_label, probe: (args) =>
                         {
                             TouchLink(link);
                             return true;
