@@ -24,6 +24,8 @@ namespace ReCollect
 
         public Action<string> CustomClickHref;
 
+        public bool CustomUrlTapHandle { get; set; }
+
         public ReLabel() : base()
         {
             Setup();
@@ -249,11 +251,11 @@ namespace ReCollect
 
                 // Open the link
                 var app = UIApplication.SharedApplication;
-                if (link.ChromeUrl != null && app.CanOpenUrl(link.ChromeUrl))
+                if (link.ChromeUrl != null && app.CanOpenUrl(link.ChromeUrl) && !CustomUrlTapHandle)
                 {
                     app.OpenUrl(link.ChromeUrl);
                 }
-                else if (app.CanOpenUrl(link.Url))
+                else if (app.CanOpenUrl(link.Url) && !CustomUrlTapHandle)
                 {
                     app.OpenUrl(link.Url);
                 }
