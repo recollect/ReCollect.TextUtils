@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using HtmlAgilityPack;
 #if __ANDROID__
 using Android.Graphics;
 #endif
-using HtmlAgilityPack;
 
 namespace ReCollect
 {
@@ -132,19 +132,19 @@ namespace ReCollect
 #endif
                     break;
                 case "h1":
-                    node_style = new HeaderStyle(1.5f, this);
+                    node_style = new HeaderStyle(1.40f, this);
                     break;
                 case "h2":
-                    node_style = new HeaderStyle(1.4f, this);
+                    node_style = new HeaderStyle(1.30f, this);
                     break;
                 case "h3":
-                    node_style = new HeaderStyle(1.3f, this);
+                    node_style = new HeaderStyle(1.20f, this);
                     break;
                 case "h4":
-                    node_style = new HeaderStyle(1.2f, this);
+                    node_style = new HeaderStyle(1.10f, this);
                     break;
                 case "h5":
-                    node_style = new HeaderStyle(1.1f, this);
+                    node_style = new HeaderStyle(1.08f, this);
                     break;
                 case "a":
                     node_style = new LinkStyle(node.GetAttributeValue("href", ""), this);
